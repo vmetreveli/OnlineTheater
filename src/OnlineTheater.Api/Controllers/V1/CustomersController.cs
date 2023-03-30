@@ -1,5 +1,8 @@
 using ErrorOr;
 using OnlineTheater.Api.Infrastructure;
+using OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
+using OnlineTheater.Applications.Features.Customer.Commands.PurchaseMovie;
+using OnlineTheater.Applications.Features.Customer.Commands.UpdateCustomer;
 using OnlineTheater.Applications.Features.Customer.Queries.GetAllCustomers;
 using OnlineTheater.Applications.Features.Customer.Queries.GetCustomers;
 using OnlineTheater.Domains.Entities;
@@ -12,18 +15,6 @@ namespace OnlineTheater.Api.Controllers;
 [Route("api/[controller]")]
 public sealed class CustomersController : ApiController
 {
-    // private readonly MovieRepository _movieRepository;
-    // private readonly CustomerRepository _customerRepository;
-    //
-    // public CustomersController(MovieRepository movieRepository,
-    //     CustomerRepository customerRepository)
-    //
-    // {
-    //     _customerRepository = customerRepository;
-    //     _movieRepository = movieRepository;
-    // }
-
-
     public CustomersController(ISender mediator) : base(mediator)
     {
     }
@@ -38,8 +29,7 @@ public sealed class CustomersController : ApiController
 
         return result.MatchFirst<IActionResult>(
             value => Ok(value)
-            , error => BadRequest());
-
+            , error => NotFound());
     }
 
     [HttpGet]
@@ -50,64 +40,50 @@ public sealed class CustomersController : ApiController
 
         return result.MatchFirst<IActionResult>(
             value => Ok(value)
+            , error => NotFound());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] Customer item, CancellationToken cancellationToken)
+    {
+        var command = new CreateCustomerCommand
+        {
+            Customer = item
+        };
+        var result = await Mediator.Send(command, cancellationToken);
+
+        return result.MatchFirst<IActionResult>(
+            value => Ok(value)
             , error => BadRequest());
     }
-    //
-    // [HttpPost]
-    // public IActionResult Create([FromBody] CreateCustomerDto item)
-    // {
-    //     Result<CustomerName> customerNameOrError = CustomerName.Create(item.Name);
-    //     Result<DomainErrors.Email> emailOrError = DomainErrors.Email.Create(item.Email);
-    //
-    //     Result result = Result.Combine(customerNameOrError, emailOrError);
-    //     if (result.IsFailure)
-    //         return Error(result.Error);
-    //
-    //     if (_customerRepository.GetByEmail(emailOrError.Value) != null)
-    //         return Error("Email is already in use: " + item.Email);
-    //
-    //     var customer = new Customer(customerNameOrError.Value, emailOrError.Value);
-    //     _customerRepository.Add(customer);
-    //
-    //     return Ok();
-    // }
-    //
-    // [HttpPut]
-    // [Route("{id}")]
-    // public IActionResult Update(long id, [FromBody] UpdateCustomerDto item)
-    // {
-    //     Result<CustomerName> customerNameOrError = CustomerName.Create(item.Name);
-    //     if (customerNameOrError.IsFailure)
-    //         return Error(customerNameOrError.Error);
-    //
-    //     Customer customer = _customerRepository.GetById(id);
-    //     if (customer == null)
-    //         return Error("Invalid customer id: " + id);
-    //
-    //     customer.Name = customerNameOrError.Value;
-    //
-    //     return Ok();
-    // }
-    //
-    // [HttpPost]
-    // [Route("{id}/movies")]
-    // public IActionResult PurchaseMovie(long id, [FromBody] long movieId)
-    // {
-    //     Movie movie = _movieRepository.GetById(movieId);
-    //     if (movie == null)
-    //         return Error("Invalid movie id: " + movieId);
-    //
-    //     Customer customer = _customerRepository.GetById(id);
-    //     if (customer == null)
-    //         return Error("Invalid customer id: " + id);
-    //
-    //     if (customer.HasPurchasedMovie(movie))
-    //         return Error("The movie is already purchased: " + movie.Name);
-    //
-    //     customer.PurchaseMovie(movie);
-    //
-    //     return Ok();
-    // }
+
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<IActionResult> Update(long id, [FromBody] UpdateCustomerCommander command,
+        CancellationToken cancellationToken)
+    {
+        var result = await Mediator.Send(command, cancellationToken);
+        return result.MatchFirst<IActionResult>(
+            value => Ok(value)
+            , error => BadRequest());
+    }
+
+    [HttpPost]
+    [Route("{id}/movies")]
+    public async Task<IActionResult> PurchaseMovie(Guid id, [FromBody] Guid movieId,
+        CancellationToken cancellationToken)
+    {
+        var command = new PurchaseMovieCommand
+        {
+            UserId = id,
+            MovieId = movieId
+        };
+        var result = await Mediator.Send(command, cancellationToken);
+        return result.MatchFirst<IActionResult>(
+            value => Ok(value)
+            , error => BadRequest());
+    }
+
     //
     // [HttpPost]
     // [Route("{id}/promotion")]
@@ -126,4 +102,3 @@ public sealed class CustomersController : ApiController
     //     return Ok();
     // }
 }
-

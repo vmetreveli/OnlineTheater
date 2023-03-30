@@ -24,13 +24,7 @@ public sealed class DataContext : DbContext
     #region Entites
 
     public DbSet<Customer> Customers { get; set; }
-    // public DbSet<Question> Questions { get; set; }
-    // public DbSet<Answer> Answers { get; set; }
-    // public DbSet<BasicInfo> BasicInfos { get; set; }
-    // public DbSet<UserRole> UserRoles { get; set; }
-    // public DbSet<Permission> Permissions { get; set; }
-    // public DbSet<Role> Roles { get; set; }
-    // public DbSet<DomainErrors.User> Users { get; set; }
-
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<PurchasedMovie> PurchasedMovies { get; set; }
     #endregion
 }
