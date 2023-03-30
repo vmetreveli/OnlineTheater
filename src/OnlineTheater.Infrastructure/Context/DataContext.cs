@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
-using Referendum.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using OnlineTheater.Domains.Entities;
+using Referendum.Domain.Errors;
 
-namespace Referendum.Infrastructure.Context;
+namespace OnlineTheater.Infrastructure.Context;
 
 public sealed class DataContext : DbContext
 {
@@ -21,14 +23,14 @@ public sealed class DataContext : DbContext
 
     #region Entites
 
-    public DbSet<UserProfile> UserProfiles { get; set; }
-    public DbSet<Question> Questions { get; set; }
-    public DbSet<Answer> Answers { get; set; }
-    public DbSet<BasicInfo> BasicInfos { get; set; }
-    public DbSet<UserRole> UserRoles { get; set; }
-    public DbSet<Permission> Permissions { get; set; }
-    public DbSet<Role> Roles { get; set; }
-    public DbSet<User> Users { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    // public DbSet<Question> Questions { get; set; }
+    // public DbSet<Answer> Answers { get; set; }
+    // public DbSet<BasicInfo> BasicInfos { get; set; }
+    // public DbSet<UserRole> UserRoles { get; set; }
+    // public DbSet<Permission> Permissions { get; set; }
+    // public DbSet<Role> Roles { get; set; }
+    // public DbSet<DomainErrors.User> Users { get; set; }
 
     #endregion
 }

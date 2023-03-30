@@ -4,19 +4,14 @@ using OnlineTheater.Domains.Entities;
 
 namespace OnlineTheater.Infrastructure.Context.Configurations;
 
-internal sealed class UserRoleConfig : IEntityTypeConfiguration<Customer>
+internal sealed class MovieConfig : IEntityTypeConfiguration<Movie>
 {
-    public void Configure(EntityTypeBuilder<Customer> builder)
+    public void Configure(EntityTypeBuilder<Movie> builder)
     {
-        builder.ToTable("Customers");
-        builder.HasKey(customer => customer.Id);
-        builder.Property(c => c.Name);
-        builder.Property(c => c.Email);
-        builder.Property(c => c.Status);
-        builder.Property(c => c.StatusExpirationDate);
-        builder.Property(c => c.MoneySpent);
+        builder.ToTable("Movies");
+        builder.HasKey(m => m.Id);
 
-        builder.HasMany(x => x.PurchasedMovies)
-            .WithMany();
+        builder.Property(m => m.Name);
+        builder.Property(m => m.LicensingModel);
     }
 }

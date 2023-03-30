@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Referendum.Domain.Primitives.Specifications;
 
-namespace Referendum.Domain.Repository;
+namespace OnlineTheater.Domains.Repository;
 
 public interface IRepositoryBase<T> where T : EntityBase
 {

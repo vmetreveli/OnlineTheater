@@ -1,9 +1,10 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using OnlineTheater.Domains.Repository;
 using Referendum.Domain.Primitives;
 using Referendum.Domain.Primitives.Specifications;
-using Referendum.Domain.Repository;
 
-namespace Referendum.Infrastructure.Repositories;
+namespace OnlineTheater.Infrastructure.Repositories;
 
 public class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBase
 {

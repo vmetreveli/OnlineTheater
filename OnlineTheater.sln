@@ -1,8 +1,42 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6010BA6D-0756-4E3D-AFF6-374EC230CF20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTheater.Api", "src\OnlineTheater.Api\OnlineTheater.Api.csproj", "{9EF85D31-2811-4F34-8A05-FA5C11CB2815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTheater.Applications", "src\OnlineTheater.Applications\OnlineTheater.Applications.csproj", "{0AB896EC-47E7-4BA8-A894-9EC8CF0C302E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTheater.Domains", "src\OnlineTheater.Domains\OnlineTheater.Domains.csproj", "{ECBEDBE3-4447-4BE3-B51F-BD571822C89C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTheater.Infrastructure", "src\OnlineTheater.Infrastructure\OnlineTheater.Infrastructure.csproj", "{3D3923B7-11AC-453B-A1AF-ED166ADA1CDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9EF85D31-2811-4F34-8A05-FA5C11CB2815} = {6010BA6D-0756-4E3D-AFF6-374EC230CF20}
+		{0AB896EC-47E7-4BA8-A894-9EC8CF0C302E} = {6010BA6D-0756-4E3D-AFF6-374EC230CF20}
+		{ECBEDBE3-4447-4BE3-B51F-BD571822C89C} = {6010BA6D-0756-4E3D-AFF6-374EC230CF20}
+		{3D3923B7-11AC-453B-A1AF-ED166ADA1CDE} = {6010BA6D-0756-4E3D-AFF6-374EC230CF20}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EF85D31-2811-4F34-8A05-FA5C11CB2815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF85D31-2811-4F34-8A05-FA5C11CB2815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EF85D31-2811-4F34-8A05-FA5C11CB2815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF85D31-2811-4F34-8A05-FA5C11CB2815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB896EC-47E7-4BA8-A894-9EC8CF0C302E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB896EC-47E7-4BA8-A894-9EC8CF0C302E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB896EC-47E7-4BA8-A894-9EC8CF0C302E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB896EC-47E7-4BA8-A894-9EC8CF0C302E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECBEDBE3-4447-4BE3-B51F-BD571822C89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECBEDBE3-4447-4BE3-B51F-BD571822C89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECBEDBE3-4447-4BE3-B51F-BD571822C89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECBEDBE3-4447-4BE3-B51F-BD571822C89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D3923B7-11AC-453B-A1AF-ED166ADA1CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3923B7-11AC-453B-A1AF-ED166ADA1CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3923B7-11AC-453B-A1AF-ED166ADA1CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3923B7-11AC-453B-A1AF-ED166ADA1CDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

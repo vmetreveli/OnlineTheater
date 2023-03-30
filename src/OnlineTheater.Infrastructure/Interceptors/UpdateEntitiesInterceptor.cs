@@ -1,8 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Referendum.Domain.Primitives;
 
-namespace Referendum.Infrastructure.Interceptors;
+namespace OnlineTheater.Infrastructure.Interceptors;
 
 public sealed class UpdateEntitiesInterceptor : SaveChangesInterceptor
 {
