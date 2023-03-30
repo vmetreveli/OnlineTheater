@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Referendum.Domain.Primitives.Specifications;
+namespace OnlineTheater.Domains.Primitives.Specifications;
 
 /// <summary>
 ///     Represents the abstract base class for specifications.

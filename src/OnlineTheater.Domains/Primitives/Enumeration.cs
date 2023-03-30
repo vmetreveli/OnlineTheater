@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Referendum.Domain.Primitives;
+namespace OnlineTheater.Domains.Primitives;
 
 public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
     where TEnum : Enumeration<TEnum>

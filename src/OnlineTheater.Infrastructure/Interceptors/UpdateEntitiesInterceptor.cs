@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Referendum.Domain.Primitives;
+using OnlineTheater.Domains.Primitives;
 
 namespace OnlineTheater.Infrastructure.Interceptors;
 

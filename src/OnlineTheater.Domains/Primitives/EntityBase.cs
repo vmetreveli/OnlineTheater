@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Referendum.Domain.Primitives.Events;
+using OnlineTheater.Domains.Primitives.Events;
 
-namespace Referendum.Domain.Primitives;
+namespace OnlineTheater.Domains.Primitives;
 
 public abstract class EntityBase : IEquatable<EntityBase>
 {

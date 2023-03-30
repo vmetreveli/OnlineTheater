@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Referendum.Domain.Primitives.Specifications;
+using OnlineTheater.Domains.Primitives;
+using OnlineTheater.Domains.Primitives.Specifications;
 
 namespace OnlineTheater.Domains.Repository;
 

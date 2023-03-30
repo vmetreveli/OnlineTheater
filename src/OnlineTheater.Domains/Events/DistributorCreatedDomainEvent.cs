@@ -1,4 +1,4 @@
-﻿using Referendum.Domain.Primitives.Events;
+﻿using OnlineTheater.Domains.Primitives.Events;
 
 namespace Referendum.Domain.Events;
 

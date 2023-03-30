@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Referendum.Domain.Primitives.Events;
+namespace OnlineTheater.Domains.Primitives.Events;
 
 /// <summary>
 ///     Represents a domain event handler interface.

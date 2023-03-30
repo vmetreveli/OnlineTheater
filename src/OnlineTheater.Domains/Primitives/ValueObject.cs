@@ -1,4 +1,4 @@
-﻿namespace Referendum.Domain.Primitives;
+﻿namespace OnlineTheater.Domains.Primitives;
 
 /// <summary>
 ///     Represents the base class all value objects derive from.

@@ -1,3 +1,3 @@
-namespace Referendum.Domain;
+namespace OnlineTheater.Domains;
 
 public sealed record AssemblyReference;

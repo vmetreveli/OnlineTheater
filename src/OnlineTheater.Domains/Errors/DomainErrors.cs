@@ -1,4 +1,4 @@
-﻿namespace Referendum.Domain.Errors;
+﻿namespace OnlineTheater.Domains.Errors;
 
 /// <summary>
 ///     Contains the domain errors.

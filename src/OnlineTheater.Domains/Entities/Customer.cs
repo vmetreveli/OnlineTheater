@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using OnlineTheater.Domains.Primitives;
 using Referendum.Domain.Enums;
 using Referendum.Domain.Errors;
 

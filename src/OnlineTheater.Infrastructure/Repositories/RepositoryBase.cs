@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using OnlineTheater.Domains.Primitives;
+using OnlineTheater.Domains.Primitives.Specifications;
 using OnlineTheater.Domains.Repository;
-using Referendum.Domain.Primitives;
-using Referendum.Domain.Primitives.Specifications;
 
 namespace OnlineTheater.Infrastructure.Repositories;
 

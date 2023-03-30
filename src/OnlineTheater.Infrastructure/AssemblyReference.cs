@@ -1,3 +1,3 @@
-namespace Referendum.Infrastructure;
+namespace OnlineTheater.Infrastructure;
 
 public sealed record AssemblyReference;

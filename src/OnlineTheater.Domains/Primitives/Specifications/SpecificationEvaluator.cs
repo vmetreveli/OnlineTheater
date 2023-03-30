@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Referendum.Domain.Primitives.Specifications;
+namespace OnlineTheater.Domains.Primitives.Specifications;
 
 public static class SpecificationEvaluator
 {
