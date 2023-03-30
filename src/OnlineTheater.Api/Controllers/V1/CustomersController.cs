@@ -1,5 +1,6 @@
 using ErrorOr;
 using OnlineTheater.Api.Infrastructure;
+using OnlineTheater.Applications.Features.Customer.Queries.GetAllCustomers;
 using OnlineTheater.Applications.Features.Customer.Queries.GetCustomers;
 using OnlineTheater.Domains.Entities;
 using OnlineTheater.Infrastructure.Repositories;
@@ -38,51 +39,19 @@ public sealed class CustomersController : ApiController
         return result.MatchFirst<IActionResult>(
             value => Ok(value)
             , error => BadRequest());
-        // Customer customer = _customerRepository.GetById(id);
-        // if (customer == null)
-        //     return NotFound();
-        //
-        // var dto = new CustomerDto
-        // {
-        //     Id = customer.Id,
-        //     Name = customer.Name.Value,
-        //     Email = customer.Email.Value,
-        //     MoneySpent = customer.MoneySpent,
-        //     Status = customer.Status.Type.ToString(),
-        //     StatusExpirationDate = customer.Status.ExpirationDate,
-        //     PurchasedMovies = customer.PurchasedMovies.Select(x => new PurchasedMovieDto
-        //     {
-        //         Price = x.Price,
-        //         ExpirationDate = x.ExpirationDate,
-        //         PurchaseDate = x.PurchaseDate,
-        //         Movie = new MovieDto
-        //         {
-        //             Id = x.Movie.Id,
-        //             Name = x.Movie.Name
-        //         }
-        //     }).ToList()
-        // };
-        //
-        // return Ok(dto);
+
     }
 
-    // [HttpGet]
-    // public IActionResult GetList()
-    // {
-    //     IReadOnlyList<Customer> customers = _customerRepository.GetList();
-    //
-    //     List<CustomerInListDto> dtos = customers.Select(x => new CustomerInListDto
-    //     {
-    //         Id = x.Id,
-    //         Name = x.Name.Value,
-    //         Email = x.Email.Value,
-    //         MoneySpent = x.MoneySpent,
-    //         Status = x.Status.Type.ToString(),
-    //         StatusExpirationDate = x.Status.ExpirationDate
-    //     }).ToList();
-    //
-    //     return Ok(dtos);
-    // }
+    [HttpGet]
+    public async Task<IActionResult> GetList(CancellationToken cancellationToken)
+    {
+        var query = new GetAllCustomersQuery();
+        var result = await Mediator.Send(query, cancellationToken);
+
+        return result.MatchFirst<IActionResult>(
+            value => Ok(value)
+            , error => BadRequest());
+    }
     //
     // [HttpPost]
     // public IActionResult Create([FromBody] CreateCustomerDto item)
@@ -157,3 +126,4 @@ public sealed class CustomersController : ApiController
     //     return Ok();
     // }
 }
+
