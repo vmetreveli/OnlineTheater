@@ -1,6 +1,7 @@
 using ErrorOr;
 using OnlineTheater.Api.Infrastructure;
 using OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
+using OnlineTheater.Applications.Features.Customer.Commands.PromoteCustomer;
 using OnlineTheater.Applications.Features.Customer.Commands.PurchaseMovie;
 using OnlineTheater.Applications.Features.Customer.Commands.UpdateCustomer;
 using OnlineTheater.Applications.Features.Customer.Queries.GetAllCustomers;
@@ -84,21 +85,18 @@ public sealed class CustomersController : ApiController
             , error => BadRequest());
     }
 
-    //
-    // [HttpPost]
-    // [Route("{id}/promotion")]
-    // public IActionResult PromoteCustomer(long id)
-    // {
-    //     Customer customer = _customerRepository.GetById(id);
-    //     if (customer == null)
-    //         return Error("Invalid customer id: " + id);
-    //
-    //     Result promotionCheck = customer.CanPromote();
-    //     if (promotionCheck.IsFailure)
-    //         return Error(promotionCheck.Error);
-    //
-    //     customer.Promote();
-    //
-    //     return Ok();
-    // }
+
+    [HttpPost]
+    [Route("{id}/promotion")]
+    public async Task<IActionResult> PromoteCustomer(Guid id, CancellationToken cancellationToken)
+    {
+        var command = new PromoteCustomerCommand
+        {
+            UserId = id
+        };
+        var result = await Mediator.Send(command, cancellationToken);
+        return result.MatchFirst<IActionResult>(
+            value => Ok(value)
+            , error => BadRequest());
+    }
 }
