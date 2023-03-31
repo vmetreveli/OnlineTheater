@@ -8,24 +8,12 @@ using Referendum.Domain.Errors;
 
 namespace OnlineTheater.Domains.Entities;
 
-public sealed class Customer: EntityBase
+public sealed class Customer : EntityBase
 {
-
-    [Required]
-    [MaxLength(100, ErrorMessage = "Name is too long")]
-    public  string Name { get; set; }
-
-    [Required]
-    [RegularExpression(@"^(.+)@(.+)$", ErrorMessage = "Email is invalid")]
-    public  string Email { get; set; }
-
-    // [JsonConverter(typeof(StringEnumConverter<,,>))]
-    public  CustomerStatus Status { get; set; }
-
-    public  DateTime? StatusExpirationDate { get; set; }
-
-    public  decimal MoneySpent { get; set; }
-
-    public  IList<PurchasedMovie> PurchasedMovies { get; set; }
-
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public CustomerStatus Status { get; set; }
+    public DateTime? StatusExpirationDate { get; set; }
+    public decimal MoneySpent { get; set; }
+    public IList<PurchasedMovie> PurchasedMovies { get; set; }
 }

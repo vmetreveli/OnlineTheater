@@ -5,7 +5,6 @@ using OnlineTheater.Applications.Features.Customer.Commands.PurchaseMovie;
 using OnlineTheater.Applications.Features.Customer.Commands.UpdateCustomer;
 using OnlineTheater.Applications.Features.Customer.Queries.GetAllCustomers;
 using OnlineTheater.Applications.Features.Customer.Queries.GetCustomerById;
-using OnlineTheater.Domains.Entities;
 
 namespace OnlineTheater.Api.Controllers.V1;
 
@@ -42,13 +41,9 @@ public sealed class CustomersController : ApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Customer item, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCustomerCommand command, CancellationToken cancellationToken)
     {
-        var command = new CreateCustomerCommand
-        {
-            Customer = item
-        };
-        var result = await Mediator.Send(command, cancellationToken);
+    var result = await Mediator.Send(command, cancellationToken);
 
         return result.MatchFirst<IActionResult>(
             value => Ok(value)
@@ -56,8 +51,8 @@ public sealed class CustomersController : ApiController
     }
 
     [HttpPut]
-    [Route("{id}")]
-    public async Task<IActionResult> Update(long id, [FromBody] UpdateCustomerCommander command,
+    //[Route()]
+    public async Task<IActionResult> Update([FromBody] UpdateCustomerCommander command,
         CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(command, cancellationToken);

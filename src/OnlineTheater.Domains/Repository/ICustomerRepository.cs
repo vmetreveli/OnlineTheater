@@ -4,5 +4,5 @@ namespace OnlineTheater.Domains.Repository;
 
 public interface ICustomerRepository:IRepositoryBase<Customer>
 {
-    public Customer? GetByEmail(string email);
+    Task<Customer?> GetByEmailAsync(string email, CancellationToken cancellationToken);
 }

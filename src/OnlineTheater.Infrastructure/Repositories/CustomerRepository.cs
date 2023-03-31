@@ -12,7 +12,7 @@ public sealed class CustomerRepository:RepositoryBase<Customer>, ICustomerReposi
         _dbContext = dbContext;
     }
 
-    public Customer? GetByEmail(string email) =>
+    public Task<Customer?> GetByEmailAsync(string email, CancellationToken cancellationToken) =>
         _dbContext.Set<Customer>()
-            .SingleOrDefault(x => x.Email == email);
+            .SingleOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
 }

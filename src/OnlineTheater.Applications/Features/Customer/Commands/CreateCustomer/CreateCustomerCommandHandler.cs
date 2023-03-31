@@ -16,14 +16,22 @@ public sealed class CreateCustomerCommandHandler : ICommandHandler<CreateCustome
 
     public async Task<ErrorOr<Unit>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        if (_customerRepository.GetByEmail(request.Customer.Email) != null)
+        if (await _customerRepository.GetByEmailAsync(request.Email, cancellationToken) != null)
         {
-            return Error.Failure(description: $"Email is already in use: {request.Customer.Email}");
+            return Error.Failure(description: $"Email is already in use: {request.Email}");
         }
 
-        // request.customer.Id = null;
-        request.Customer.Status = CustomerStatus.Regular;
-        _customerRepository.CreateAsync(request.Customer, cancellationToken);
+        var customer = new Domains.Entities.Customer
+        {
+            Name = request.Name,
+            Email = request.Email,
+            MoneySpent = 0,
+            Status = CustomerStatus.Regular,
+            StatusExpirationDate = null
+        };
+
+
+        _customerRepository.CreateAsync(customer, cancellationToken);
         _customerRepository.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }

@@ -5,5 +5,6 @@ namespace OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
 
 public sealed class CreateCustomerCommand : ICommand<Unit>
 {
-    public Domains.Entities.Customer Customer { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
 }

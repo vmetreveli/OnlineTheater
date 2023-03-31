@@ -20,7 +20,7 @@ public sealed class UpdateCustomerCommanderHandler : ICommandHandler<UpdateCusto
             return Error.Failure(description: $"Invalid customer id:: {request.Id}");
         }
 
-        customer.Name = request.Customer.Name;
+        customer.Name = request.Name;
         _customerRepository.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
