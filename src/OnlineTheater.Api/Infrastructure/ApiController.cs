@@ -1,7 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
-namespace OnlineTheater.Api.Infrastructure;
+﻿namespace OnlineTheater.Api.Infrastructure;
 
 [ApiController]
 //[Authorize]

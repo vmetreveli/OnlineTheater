@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Primitives;
 using Referendum.Domain.Enums;
 using Referendum.Domain.Errors;
@@ -18,7 +19,7 @@ public sealed class Customer: EntityBase
     [RegularExpression(@"^(.+)@(.+)$", ErrorMessage = "Email is invalid")]
     public  string Email { get; set; }
 
-    [JsonConverter(typeof(StringEnumConverter<,,>))]
+    // [JsonConverter(typeof(StringEnumConverter<,,>))]
     public  CustomerStatus Status { get; set; }
 
     public  DateTime? StatusExpirationDate { get; set; }

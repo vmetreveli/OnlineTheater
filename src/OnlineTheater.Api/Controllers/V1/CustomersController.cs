@@ -1,16 +1,13 @@
-using ErrorOr;
 using OnlineTheater.Api.Infrastructure;
 using OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
 using OnlineTheater.Applications.Features.Customer.Commands.PromoteCustomer;
 using OnlineTheater.Applications.Features.Customer.Commands.PurchaseMovie;
 using OnlineTheater.Applications.Features.Customer.Commands.UpdateCustomer;
 using OnlineTheater.Applications.Features.Customer.Queries.GetAllCustomers;
-using OnlineTheater.Applications.Features.Customer.Queries.GetCustomers;
+using OnlineTheater.Applications.Features.Customer.Queries.GetCustomerById;
 using OnlineTheater.Domains.Entities;
-using OnlineTheater.Infrastructure.Repositories;
 
-
-namespace OnlineTheater.Api.Controllers;
+namespace OnlineTheater.Api.Controllers.V1;
 
 [ApiVersion("1.0")]
 [Route("api/[controller]")]

@@ -1,4 +1,4 @@
-namespace Referendum.Domain.Enums;
+namespace OnlineTheater.Domains.Enums;
 
 public enum CustomerStatus
 {

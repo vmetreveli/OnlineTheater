@@ -1,4 +1,5 @@
 using OnlineTheater.Applications.Abstractions.Messaging;
+using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Repository;
 using Referendum.Domain.Enums;
 

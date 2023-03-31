@@ -1,4 +1,5 @@
 using OnlineTheater.Domains.Entities;
+using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Services;
 using Referendum.Domain.Enums;
 

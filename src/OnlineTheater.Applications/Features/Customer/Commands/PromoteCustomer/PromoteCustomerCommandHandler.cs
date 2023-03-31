@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using OnlineTheater.Applications.Abstractions.Messaging;
+using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Repository;
 using OnlineTheater.Domains.Services;
 using Referendum.Domain.Enums;

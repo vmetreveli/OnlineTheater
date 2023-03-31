@@ -1,6 +1,6 @@
 ﻿namespace OnlineTheater.Applications.Contracts
 {
-    public class PurchasedMovieDto
+    public sealed class PurchasedMovieDto
     {
         public MovieDto Movie { get; set; }
         public decimal Price { get; set; }
