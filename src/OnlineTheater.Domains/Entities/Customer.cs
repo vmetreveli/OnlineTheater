@@ -22,6 +22,7 @@ public sealed class Customer : EntityBase
         set => _email = value.Value;
     }
 
+
     public CustomerStatus Status { get; set; }
     public DateTime? StatusExpirationDate { get; set; }
     public decimal MoneySpent { get; set; }

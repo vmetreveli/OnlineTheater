@@ -1,9 +1,7 @@
 using OnlineTheater.Applications.Abstractions.Messaging;
 using OnlineTheater.Domains.Enums;
-using OnlineTheater.Domains.Errors;
 using OnlineTheater.Domains.Repository;
 using OnlineTheater.Domains.ValueObjects;
-using Referendum.Domain.Enums;
 
 namespace OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
 
@@ -12,9 +10,7 @@ public sealed class CreateCustomerCommandHandler : ICommandHandler<CreateCustome
     private readonly ICustomerRepository _customerRepository;
 
     public CreateCustomerCommandHandler(ICustomerRepository customerRepository)
-    {
-        _customerRepository = customerRepository;
-    }
+        => _customerRepository = customerRepository;
 
     public async Task<ErrorOr<Unit>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
@@ -29,16 +25,17 @@ public sealed class CreateCustomerCommandHandler : ICommandHandler<CreateCustome
             return errors;
         }
 
+        var customer = await _customerRepository.GetByEmailAsync(emailOrError.Value, cancellationToken);
 
-        if (await _customerRepository.GetByEmailAsync(emailOrError.Value, cancellationToken) != null)
+        if (customer is not null)
         {
             return Error.Failure(description: $"Email is already in use: {request.Email}");
         }
 
-        var customer = new Domains.Entities.Customer
+        customer = new Domains.Entities.Customer
         {
-            Name = customerNameOrError.Value, //CustomerName.Create(request.Name),
-            Email = emailOrError.Value,
+            Name = customerNameOrError.Value,
+          //  Email = emailOrError.Value,
             MoneySpent = 0,
             Status = CustomerStatus.Regular,
             StatusExpirationDate = null

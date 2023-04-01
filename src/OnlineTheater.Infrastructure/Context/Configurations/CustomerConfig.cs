@@ -17,17 +17,18 @@ internal sealed class CustomerConfig : IEntityTypeConfiguration<Customer>
                 .Property(l => l.Value)
                 .HasColumnName(nameof(Customer.Name))
                 .IsRequired());
+        builder.Navigation(e => e.Name);
 
         builder.OwnsOne(e => e.Email, modelNameBuilder =>
             modelNameBuilder
                 .Property(l => l.Value)
                 .HasColumnName(nameof(Customer.Email))
                 .IsRequired());
+        builder.Navigation(e => e.Name);
 
         builder.Property(c => c.Status);
         builder.Property(c => c.StatusExpirationDate);
         builder.Property(c => c.MoneySpent)
-            .HasColumnName("_money_spent")
             .HasColumnType("decimal(18, 2)");
 
         builder.HasMany(x => x.PurchasedMovies);

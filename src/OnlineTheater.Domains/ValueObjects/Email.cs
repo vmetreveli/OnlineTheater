@@ -31,4 +31,11 @@ public sealed class Email : ValueObject<Email>
 
     protected override int GetHashCodeCore()
         => Value.GetHashCode();
+
+
+    public static explicit operator Email(string email)
+        => Create(email).Value;
+
+    public static implicit operator string(Email email)
+        => email.Value;
 }
