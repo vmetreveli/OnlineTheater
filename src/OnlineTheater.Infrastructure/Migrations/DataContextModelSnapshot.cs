@@ -22,38 +22,15 @@ namespace OnlineTheater.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CustomerPurchasedMovie", b =>
-                {
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PurchasedMoviesId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("CustomerId", "PurchasedMoviesId");
-
-                    b.HasIndex("PurchasedMoviesId");
-
-                    b.ToTable("CustomerPurchasedMovie");
-                });
-
             modelBuilder.Entity("OnlineTheater.Domains.Entities.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<decimal>("MoneySpent")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("_money_spent");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -90,16 +67,13 @@ namespace OnlineTheater.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("MovieId")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid>("MovieId1")
+                    b.Property<Guid>("MovieId")
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("Price")
@@ -110,35 +84,78 @@ namespace OnlineTheater.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId1");
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("MovieId");
 
                     b.ToTable("PurchasedMovies", (string)null);
                 });
 
-            modelBuilder.Entity("CustomerPurchasedMovie", b =>
+            modelBuilder.Entity("OnlineTheater.Domains.Entities.Customer", b =>
                 {
-                    b.HasOne("OnlineTheater.Domains.Entities.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.OwnsOne("OnlineTheater.Domains.ValueObjects.CustomerName", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Name");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
+                    b.OwnsOne("OnlineTheater.Domains.ValueObjects.Email", "Email", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
+                    b.Navigation("Email")
                         .IsRequired();
 
-                    b.HasOne("OnlineTheater.Domains.Entities.PurchasedMovie", null)
-                        .WithMany()
-                        .HasForeignKey("PurchasedMoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.Navigation("Name")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("OnlineTheater.Domains.Entities.PurchasedMovie", b =>
                 {
+                    b.HasOne("OnlineTheater.Domains.Entities.Customer", null)
+                        .WithMany("PurchasedMovies")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("OnlineTheater.Domains.Entities.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieId1")
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("OnlineTheater.Domains.Entities.Customer", b =>
+                {
+                    b.Navigation("PurchasedMovies");
                 });
 #pragma warning restore 612, 618
         }

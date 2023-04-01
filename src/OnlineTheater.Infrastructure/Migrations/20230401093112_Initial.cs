@@ -16,11 +16,11 @@ namespace OnlineTheater.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     StatusExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    MoneySpent = table.Column<decimal>(type: "numeric", nullable: false)
+                    _money_spent = table.Column<decimal>(type: "numeric(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,9 +45,8 @@ namespace OnlineTheater.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    MovieId = table.Column<long>(type: "bigint", nullable: false),
-                    MovieId1 = table.Column<Guid>(type: "uuid", nullable: false),
-                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
+                    MovieId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     PurchaseDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -56,59 +55,38 @@ namespace OnlineTheater.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_PurchasedMovies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PurchasedMovies_Movies_MovieId1",
-                        column: x => x.MovieId1,
-                        principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CustomerPurchasedMovie",
-                columns: table => new
-                {
-                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PurchasedMoviesId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomerPurchasedMovie", x => new { x.CustomerId, x.PurchasedMoviesId });
-                    table.ForeignKey(
-                        name: "FK_CustomerPurchasedMovie_Customers_CustomerId",
+                        name: "FK_PurchasedMovies_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerPurchasedMovie_PurchasedMovies_PurchasedMoviesId",
-                        column: x => x.PurchasedMoviesId,
-                        principalTable: "PurchasedMovies",
+                        name: "FK_PurchasedMovies_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPurchasedMovie_PurchasedMoviesId",
-                table: "CustomerPurchasedMovie",
-                column: "PurchasedMoviesId");
+                name: "IX_PurchasedMovies_CustomerId",
+                table: "PurchasedMovies",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchasedMovies_MovieId1",
+                name: "IX_PurchasedMovies_MovieId",
                 table: "PurchasedMovies",
-                column: "MovieId1");
+                column: "MovieId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CustomerPurchasedMovie");
+                name: "PurchasedMovies");
 
             migrationBuilder.DropTable(
                 name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "PurchasedMovies");
 
             migrationBuilder.DropTable(
                 name: "Movies");

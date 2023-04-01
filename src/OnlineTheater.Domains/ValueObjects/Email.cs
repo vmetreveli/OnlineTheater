@@ -10,7 +10,7 @@ public sealed class Email : ValueObject<Email>
     private Email(string value)
         => Value = value;
 
-    public static ErrorOr<Email> Create(string email)
+    public static ErrorOr<Email> Create(string? email)
     {
         email = ( email ?? string.Empty ).Trim();
         if (email.Length == 0)

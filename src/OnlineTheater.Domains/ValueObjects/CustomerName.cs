@@ -9,7 +9,7 @@ public sealed class CustomerName : ValueObject<CustomerName>
     private CustomerName(string value)
         => Value = value;
 
-    public static ErrorOr<CustomerName> Create(string customerName)
+    public static ErrorOr<CustomerName> Create(string? customerName)
     {
         customerName = ( customerName ?? string.Empty ).Trim();
         if (customerName.Length == 0)
