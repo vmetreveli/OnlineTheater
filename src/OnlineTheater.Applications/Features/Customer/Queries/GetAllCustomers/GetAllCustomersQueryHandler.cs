@@ -25,8 +25,8 @@ public sealed class GetAllCustomersQueryHandler : IQueryHandler<GetAllCustomersQ
             .Select(x => new CustomerInListDto
             {
                 Id = x.Id,
-                Name = x.Name,
-                Email = x.Email,
+                Name = x.Name.Value,
+                Email = x.Email.Value,
                 MoneySpent = x.MoneySpent,
                 Status = x.Status.ToString(),
                 StatusExpirationDate = x.StatusExpirationDate

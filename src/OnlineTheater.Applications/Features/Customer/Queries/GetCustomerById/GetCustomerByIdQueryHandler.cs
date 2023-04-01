@@ -26,8 +26,8 @@ public sealed class GetCustomerByIdQueryHandler : IQueryHandler<GetCustomerByIdQ
         var dto = new CustomerDto
         {
             Id = res.Id,
-            Name = res.Name,
-            Email = res.Email,
+            Name = res.Name.Value,
+            Email = res.Email.Value,
             MoneySpent = res.MoneySpent,
             Status = res.Status.ToString(),
             StatusExpirationDate = res.StatusExpirationDate,

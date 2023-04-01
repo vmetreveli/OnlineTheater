@@ -16,7 +16,6 @@ internal sealed class CustomerConfig : IEntityTypeConfiguration<Customer>
         builder.Property(c => c.StatusExpirationDate);
         builder.Property(c => c.MoneySpent);
 
-        builder.HasMany(x => x.PurchasedMovies)
-            .WithMany();
+        builder.HasMany(x => x.PurchasedMovies);
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineTheater.Domains.Entities;
 using OnlineTheater.Domains.Repository;
+using OnlineTheater.Domains.ValueObjects;
 
 namespace OnlineTheater.Infrastructure.Repositories;
 
@@ -12,7 +13,7 @@ public sealed class CustomerRepository:RepositoryBase<Customer>, ICustomerReposi
         _dbContext = dbContext;
     }
 
-    public Task<Customer?> GetByEmailAsync(string email, CancellationToken cancellationToken) =>
+    public Task<Customer?> GetByEmailAsync(Email email, CancellationToken cancellationToken) =>
         _dbContext.Set<Customer>()
             .SingleOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
 }

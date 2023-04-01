@@ -1,5 +1,5 @@
 using OnlineTheater.Applications.Abstractions.Messaging;
-using OnlineTheater.Applications.Contracts;
+using OnlineTheater.Domains.ValueObjects;
 
 namespace OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
 
