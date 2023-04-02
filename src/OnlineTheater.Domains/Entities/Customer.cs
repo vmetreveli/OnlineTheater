@@ -11,7 +11,7 @@ public sealed class Customer : EntityBase
     public Email Email { get; private set; }
 
     public CustomerStatus Status { get; set; }
-    public ExpirationDate? StatusExpirationDate { get; set; }
+    public ExpirationDate StatusExpirationDate { get; set; }
     public Dollars MoneySpent { get; set; }
     public IList<PurchasedMovie> PurchasedMovies { get; set; }
 
