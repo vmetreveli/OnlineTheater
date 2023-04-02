@@ -30,12 +30,12 @@ public sealed class GetCustomerByIdQueryHandler : IQueryHandler<GetCustomerByIdQ
             Email = res.Email.Value,
             MoneySpent = res.MoneySpent.Value,
             Status = res.Status.ToString(),
-            StatusExpirationDate = res.StatusExpirationDate,
+            StatusExpirationDate = res.StatusExpirationDate.Date,
             PurchasedMovies = res.PurchasedMovies
-                .Select(x => new PurchasedMovieDto
+                ?.Select(x => new PurchasedMovieDto
                 {
                     Price = x.Price.Value,
-                    ExpirationDate = x.ExpirationDate,
+                    ExpirationDate = x.ExpirationDate.Date,
                     PurchaseDate = x.PurchaseDate,
                     Movie = new MovieDto
                     {

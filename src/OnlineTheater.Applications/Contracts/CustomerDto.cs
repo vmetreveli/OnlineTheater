@@ -8,5 +8,5 @@ public sealed class CustomerDto
     public string Status { get; set; }
     public DateTime? StatusExpirationDate { get; set; }
     public decimal? MoneySpent { get; set; }
-    public IEnumerable<PurchasedMovieDto> PurchasedMovies { get; set; }
+    public IEnumerable<PurchasedMovieDto>? PurchasedMovies { get; set; }
 }
