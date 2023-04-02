@@ -14,14 +14,19 @@ internal sealed class PurchasedMovieConfig : IEntityTypeConfiguration<PurchasedM
         builder.OwnsOne(e => e.Price, modelNameBuilder =>
             modelNameBuilder
                 .Property(l => l.Value)
-                .HasColumnName(nameof(Customer.MoneySpent))
+                .HasColumnName(nameof(PurchasedMovie.Price))
                 .HasColumnType("decimal(18, 2)")
                 .IsRequired());
 
         builder.Navigation(n => n.Price);
 
         builder.Property(m => m.PurchaseDate);
-        builder.Property(m => m.ExpirationDate);
+        builder.OwnsOne(e => e.ExpirationDate, modelNameBuilder =>
+            modelNameBuilder
+                .Property(l => l.Date)
+                .HasColumnName(nameof(PurchasedMovie.ExpirationDate)));
+
+        builder.Navigation(n => n.ExpirationDate);
         builder.Property(m => m.MovieId);
         builder.Property(m => m.CustomerId);
 

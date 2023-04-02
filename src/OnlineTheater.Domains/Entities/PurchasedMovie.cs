@@ -16,5 +16,5 @@ public sealed class PurchasedMovie : EntityBase
 
     public DateTime PurchaseDate { get; set; }
 
-    public DateTime? ExpirationDate { get; set; }
+    public ExpirationDate ExpirationDate { get; set; }
 }

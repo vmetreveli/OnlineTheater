@@ -33,14 +33,14 @@ public sealed class PurchaseMovieCommandHandler : ICommandHandler<PurchaseMovieC
         }
 
         if (customer.PurchasedMovies.Any(x =>
-                x.MovieId == movie.Id && ( x.ExpirationDate == null || x.ExpirationDate.Value >= DateTime.UtcNow )))
+                x.MovieId == movie.Id && !x.ExpirationDate.IsExpired))
         {
             return Error.Conflict(description: $"The movie is already purchased:: {movie.Name}");
         }
 
         _customerService.PurchaseMovie(customer, movie);
 
-        _customerRepository.SaveChangesAsync(cancellationToken);
+        await _customerRepository.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

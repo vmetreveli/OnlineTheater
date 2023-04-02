@@ -6,7 +6,6 @@ using Referendum.Domain.Enums;
 
 namespace OnlineTheater.Infrastructure.Service
 {
-
     public class CustomerService : ICustomerService
     {
         private readonly IMovieService _movieService;
@@ -16,7 +15,8 @@ namespace OnlineTheater.Infrastructure.Service
             _movieService = movieService;
         }
 
-        public Dollars CalculatePrice(CustomerStatus status, DateTime? statusExpirationDate, LicensingModel licensingModel)
+        public Dollars CalculatePrice(CustomerStatus status, ExpirationDate? statusExpirationDate,
+            LicensingModel licensingModel)
         {
             Dollars price;
             switch (licensingModel)
@@ -33,7 +33,7 @@ namespace OnlineTheater.Infrastructure.Service
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (status == CustomerStatus.Advanced && (statusExpirationDate == null || statusExpirationDate.Value >= DateTime.UtcNow))
+            if (status == CustomerStatus.Advanced && !statusExpirationDate.IsExpired)
             {
                 price = price * 0.75m;
             }
@@ -43,7 +43,7 @@ namespace OnlineTheater.Infrastructure.Service
 
         public void PurchaseMovie(Customer customer, Movie movie)
         {
-            DateTime? expirationDate = _movieService.GetExpirationDate(movie.LicensingModel);
+            ExpirationDate expirationDate = _movieService.GetExpirationDate(movie.LicensingModel);
             Dollars price = CalculatePrice(customer.Status, customer.StatusExpirationDate, movie.LicensingModel);
 
             var purchasedMovie = new PurchasedMovie
@@ -51,7 +51,8 @@ namespace OnlineTheater.Infrastructure.Service
                 MovieId = movie.Id,
                 CustomerId = customer.Id,
                 ExpirationDate = expirationDate,
-                Price = price
+                Price = price,
+                PurchaseDate = DateTime.UtcNow
             };
 
             customer.PurchasedMovies.Add(purchasedMovie);
@@ -61,7 +62,9 @@ namespace OnlineTheater.Infrastructure.Service
         public bool PromoteCustomer(Customer customer)
         {
             // at least 2 active movies during the last 30 days
-            if (customer.PurchasedMovies.Count(x => x.ExpirationDate == null || x.ExpirationDate.Value >= DateTime.UtcNow.AddDays(-30)) < 2)
+            if (customer.PurchasedMovies.Count(x =>
+                    x.ExpirationDate == ExpirationDate.Infinite ||
+                    x.ExpirationDate.Date >= DateTime.UtcNow.AddDays(-30)) < 2)
                 return false;
 
             // at least 100 dollars spent during the last year
@@ -70,7 +73,7 @@ namespace OnlineTheater.Infrastructure.Service
                 return false;
 
             customer.Status = CustomerStatus.Advanced;
-            customer.StatusExpirationDate = DateTime.UtcNow.AddYears(1);
+            customer.StatusExpirationDate = (ExpirationDate) DateTime.UtcNow.AddYears(1);
 
             return true;
         }

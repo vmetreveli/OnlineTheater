@@ -10,7 +10,7 @@ public abstract class ValueObject : IEquatable<ValueObject>
         return GetAtomicValues().SequenceEqual(other.GetAtomicValues());
     }
 
-    public static bool operator ==(ValueObject? a, ValueObject? b)
+    public static bool operator ==(ValueObject a, ValueObject? b)
     {
         if (a is null && b is null) return true;
 

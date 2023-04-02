@@ -1,8 +1,9 @@
+using OnlineTheater.Domains.ValueObjects;
 using Referendum.Domain.Enums;
 
-namespace OnlineTheater.Infrastructure.Service;
+namespace OnlineTheater.Domains.Services;
 
 public interface IMovieService
 {
-    DateTime? GetExpirationDate(LicensingModel licensingModel);
+    ExpirationDate GetExpirationDate(LicensingModel licensingModel);
 }

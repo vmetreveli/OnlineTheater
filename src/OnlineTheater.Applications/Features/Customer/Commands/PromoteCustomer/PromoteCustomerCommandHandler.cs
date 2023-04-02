@@ -24,8 +24,7 @@ public sealed class PromoteCustomerCommandHandler : ICommandHandler<PromoteCusto
         if (customer == null)
             return Error.Failure(description: $"Invalid customer id: {request.UserId}");
 
-        if (customer.Status == CustomerStatus.Advanced && ( customer.StatusExpirationDate == null ||
-                                                            customer.StatusExpirationDate.Value < DateTime.UtcNow ))
+        if (customer.Status == CustomerStatus.Advanced && !customer.StatusExpirationDate.IsExpired)
         {
             return Error.Conflict("The customer already has the Advanced status");
         }

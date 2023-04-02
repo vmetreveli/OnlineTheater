@@ -1,21 +1,23 @@
-﻿using Referendum.Domain.Enums;
+﻿using OnlineTheater.Domains.Services;
+using OnlineTheater.Domains.ValueObjects;
+using Referendum.Domain.Enums;
 
 namespace OnlineTheater.Infrastructure.Service
 {
     public class MovieService : IMovieService
     {
-        public DateTime? GetExpirationDate(LicensingModel licensingModel)
+        public ExpirationDate GetExpirationDate(LicensingModel licensingModel)
         {
-            DateTime? result;
+            ExpirationDate result;
 
             switch (licensingModel)
             {
                 case LicensingModel.TwoDays:
-                    result = DateTime.UtcNow.AddDays(2);
+                    result = (ExpirationDate)DateTime.UtcNow.AddDays(2);
                     break;
 
                 case LicensingModel.LifeLong:
-                    result = null;
+                    result = ExpirationDate.Infinite;
                     break;
 
                 default:
