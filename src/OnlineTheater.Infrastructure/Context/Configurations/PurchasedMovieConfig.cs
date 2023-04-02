@@ -20,5 +20,13 @@ internal sealed class PurchasedMovieConfig : IEntityTypeConfiguration<PurchasedM
         builder.HasOne(x => x.Movie)
             .WithMany().HasForeignKey(x => x.MovieId)
             .OnDelete(DeleteBehavior.Cascade);
+
+
+        builder.Property(c => c.CreatedOn).IsRequired();
+        builder.Property(c => c.ModifiedOn);
+        builder.Property(c => c.DeletedOn);
+        builder.Property(c => c.IsDelete).IsRequired();
+
+        builder.HasQueryFilter(c => !c.IsDelete);
     }
 }

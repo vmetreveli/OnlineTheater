@@ -17,20 +17,35 @@ internal sealed class CustomerConfig : IEntityTypeConfiguration<Customer>
                 .Property(l => l.Value)
                 .HasColumnName(nameof(Customer.Name))
                 .IsRequired());
-        builder.Navigation(e => e.Name);
+
+        builder.Navigation(n => n.Name);
 
         builder.OwnsOne(e => e.Email, modelNameBuilder =>
             modelNameBuilder
                 .Property(l => l.Value)
                 .HasColumnName(nameof(Customer.Email))
                 .IsRequired());
-        builder.Navigation(e => e.Name);
 
+        builder.Navigation(n => n.Email);
+
+
+
+
+        // builder.Property(c => c.Name.Value)
+        //     .HasColumnName(nameof(Customer.Name));
+       // builder.Navigation(c => c.Email);
         builder.Property(c => c.Status);
         builder.Property(c => c.StatusExpirationDate);
         builder.Property(c => c.MoneySpent)
             .HasColumnType("decimal(18, 2)");
 
         builder.HasMany(x => x.PurchasedMovies);
+
+        builder.Property(c => c.CreatedOn).IsRequired();
+        builder.Property(c => c.ModifiedOn);
+        builder.Property(c => c.DeletedOn);
+        builder.Property(c => c.IsDelete).IsRequired();
+
+        builder.HasQueryFilter(c => !c.IsDelete);
     }
 }

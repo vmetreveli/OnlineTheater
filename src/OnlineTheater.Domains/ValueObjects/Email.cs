@@ -1,12 +1,17 @@
 using System.Text.RegularExpressions;
-using CSharpFunctionalExtensions;
+using OnlineTheater.Domains.Primitives;
+
 
 namespace OnlineTheater.Domains.ValueObjects;
 
-public sealed class Email : ValueObject<Email>
+public sealed class Email : ValueObject
 {
-    public string Value { get; }
+    public string? Value { get; }
 
+    private Email()
+    {
+
+    }
     private Email(string value)
         => Value = value;
 
@@ -26,16 +31,19 @@ public sealed class Email : ValueObject<Email>
         return new Email(email);
     }
 
-    protected override bool EqualsCore(Email other)
-        => Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
-
-    protected override int GetHashCodeCore()
-        => Value.GetHashCode();
-
 
     public static explicit operator Email(string email)
-        => Create(email).Value;
+    {
+        return Create(email).Value;
+    }
 
     public static implicit operator string(Email email)
-        => email.Value;
+    {
+        return email.Value;
+    }
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value;
+    }
 }

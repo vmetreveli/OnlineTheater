@@ -1,4 +1,5 @@
 using CSharpFunctionalExtensions;
+using OnlineTheater.Domains.Primitives;
 
 namespace OnlineTheater.Domains.ValueObjects;
 
@@ -20,9 +21,24 @@ public sealed class CustomerName : ValueObject<CustomerName>
         };
     }
 
+
     protected override bool EqualsCore(CustomerName other)
-        => Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
+    {
+        return Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
+    }
 
     protected override int GetHashCodeCore()
-        => Value.GetHashCode();
+    {
+        return Value.GetHashCode();
+    }
+
+    public static implicit operator string(CustomerName customerName)
+    {
+        return customerName.Value;
+    }
+
+    public static explicit operator CustomerName(string customerName)
+    {
+        return Create(customerName).Value;
+    }
 }

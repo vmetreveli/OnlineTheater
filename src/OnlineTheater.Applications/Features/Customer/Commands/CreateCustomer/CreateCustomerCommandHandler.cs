@@ -32,14 +32,7 @@ public sealed class CreateCustomerCommandHandler : ICommandHandler<CreateCustome
             return Error.Failure(description: $"Email is already in use: {request.Email}");
         }
 
-        customer = new Domains.Entities.Customer
-        {
-            Name = customerNameOrError.Value,
-          //  Email = emailOrError.Value,
-            MoneySpent = 0,
-            Status = CustomerStatus.Regular,
-            StatusExpirationDate = null
-        };
+        customer = new Domains.Entities.Customer(customerNameOrError.Value,  emailOrError.Value);
 
 
         await _customerRepository.CreateAsync(customer, cancellationToken);

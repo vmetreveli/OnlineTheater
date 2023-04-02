@@ -72,6 +72,6 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
         exception switch
         {
             ValidationException validationException => ( HttpStatusCode.BadRequest, validationException.Errors ),
-            _ => ( HttpStatusCode.InternalServerError, new[] {Error.Validation()} )
+            _ => ( HttpStatusCode.InternalServerError, new[] {Error.Failure(description:exception.Message)} )
         };
 }
