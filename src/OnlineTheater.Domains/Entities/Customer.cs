@@ -6,20 +6,9 @@ namespace OnlineTheater.Domains.Entities;
 
 public sealed class Customer : EntityBase
 {
-    private string? _name;
-    public  CustomerName Name
-    {
-        get => (CustomerName)_name;
-        set => _name = value;
-    }
+    public CustomerName Name { get; private set; }
 
-    private  string? _email;
-
-    public Email Email
-    {
-        get => (Email)_email;
-        set => _email = value;
-    }
+    public Email Email { get; private set; }
 
     public CustomerStatus Status { get; set; }
     public DateTime? StatusExpirationDate { get; set; }
@@ -28,16 +17,22 @@ public sealed class Customer : EntityBase
 
     private Customer()
     {
-       // _purchasedMovies = new List<PurchasedMovie>();
+        // _purchasedMovies = new List<PurchasedMovie>();
     }
+
     public Customer(CustomerName name, Email email) : this()
     {
-        _name = name ?? throw new ArgumentNullException(nameof(name));
-        _email = email ?? throw new ArgumentNullException(nameof(email));
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Email = email ?? throw new ArgumentNullException(nameof(email));
 
-        MoneySpent =0;
+        MoneySpent = 0;
         Status = CustomerStatus.Regular;
 
         StatusExpirationDate = null;
+    }
+
+    public void UpdateCustomer(CustomerName name)
+    {
+        Name = name;
     }
 }
