@@ -6,9 +6,9 @@ namespace OnlineTheater.Applications.Features.Customer.Commands.PurchaseMovie;
 
 public sealed class PurchaseMovieCommandHandler : ICommandHandler<PurchaseMovieCommand, Unit>
 {
-    private readonly IMovieRepository _movieRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly ICustomerService _customerService;
+    private readonly IMovieRepository _movieRepository;
 
     public PurchaseMovieCommandHandler(IMovieRepository movieRepository, ICustomerRepository customerRepository,
         ICustomerService customerService)
@@ -21,22 +21,14 @@ public sealed class PurchaseMovieCommandHandler : ICommandHandler<PurchaseMovieC
     public async Task<ErrorOr<Unit>> Handle(PurchaseMovieCommand request, CancellationToken cancellationToken)
     {
         var movie = await _movieRepository.GetByIdAsync(request.MovieId, cancellationToken);
-        if (movie == null)
-        {
-            return Error.Failure(description: $"Invalid movie id: {request.MovieId}");
-        }
+        if (movie == null) return Error.Failure(description: $"Invalid movie id: {request.MovieId}");
 
         var customer = await _customerRepository.GetByIdAsync(request.UserId, cancellationToken);
-        if (customer == null)
-        {
-            return Error.Failure(description: $"Invalid customer id: {request.UserId}");
-        }
+        if (customer == null) return Error.Failure(description: $"Invalid customer id: {request.UserId}");
 
         if (customer.PurchasedMovies.Any(x =>
                 x.MovieId == movie.Id && !x.ExpirationDate.IsExpired))
-        {
             return Error.Conflict(description: $"The movie is already purchased:: {movie.Name}");
-        }
 
         _customerService.PurchaseMovie(customer, movie);
 

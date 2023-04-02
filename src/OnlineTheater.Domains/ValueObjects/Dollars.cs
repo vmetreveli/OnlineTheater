@@ -5,7 +5,6 @@ namespace OnlineTheater.Domains.ValueObjects;
 public sealed class Dollars : ValueObject
 {
     private const decimal MaxDollarAmount = 1_000_000;
-    public decimal? Value { get; }
 
     private Dollars()
     {
@@ -13,6 +12,8 @@ public sealed class Dollars : ValueObject
 
     private Dollars(decimal? value)
         => Value = value;
+
+    public decimal? Value { get; }
 
     public static ErrorOr<Dollars> Create(decimal? dollarAmount)
     {
@@ -27,7 +28,7 @@ public sealed class Dollars : ValueObject
         }
 
         return dollarAmount % 0.01m > 0
-            ? Error.Validation(description: $"Dollar amount cannot contain part of  a penny")
+            ? Error.Validation(description: "Dollar amount cannot contain part of  a penny")
             : new Dollars(dollarAmount);
     }
 
@@ -35,10 +36,10 @@ public sealed class Dollars : ValueObject
         => Create(value).Value;
 
     public static Dollars operator *(Dollars dollars, decimal multiplier) =>
-        new Dollars(dollars.Value * multiplier);
+        new(dollars.Value * multiplier);
 
     public static Dollars operator +(Dollars dollars1, Dollars dollars2) =>
-        new Dollars(dollars1.Value + dollars2.Value);
+        new(dollars1.Value + dollars2.Value);
 
     // public static explicit operator Dollars(decimal? value)
     //     => Create(value).Value;

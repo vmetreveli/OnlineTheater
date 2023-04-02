@@ -50,7 +50,7 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
 
         httpContext.Response.ContentType = "application/json";
 
-        httpContext.Response.StatusCode = (int) httpStatusCode;
+        httpContext.Response.StatusCode = (int)httpStatusCode;
 
         var serializerOptions = new JsonSerializerOptions
         {
@@ -74,7 +74,8 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
             ValidationException validationException => ( HttpStatusCode.BadRequest, validationException.Errors ),
             _ => ( HttpStatusCode.InternalServerError, new[]
             {
-                Error.Failure(description: $"Error Message: {exception.Message}\n Inner Exception: {exception.InnerException}")
+                Error.Failure(
+                    description: $"Error Message: {exception.Message}\n Inner Exception: {exception.InnerException}")
             } )
         };
 }

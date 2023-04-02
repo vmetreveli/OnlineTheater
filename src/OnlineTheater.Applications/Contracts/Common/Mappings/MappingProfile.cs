@@ -38,7 +38,7 @@ public sealed class MappingProfile : Profile
 
         var types = assembly.GetExportedTypes().Where(t => t.GetInterfaces().Any(HasInterface)).ToList();
 
-        var argumentTypes = new[] {typeof(Profile)};
+        var argumentTypes = new[] { typeof(Profile) };
 
         foreach (var type in types)
         {
@@ -47,7 +47,7 @@ public sealed class MappingProfile : Profile
             var methodInfo = type.GetMethod(mappingMethodName);
 
             if (methodInfo != null)
-                methodInfo.Invoke(instance, new object[] {this});
+                methodInfo.Invoke(instance, new object[] { this });
             else
             {
                 var interfaces = type.GetInterfaces().Where(HasInterface).ToList();
@@ -57,7 +57,7 @@ public sealed class MappingProfile : Profile
                     {
                         var interfaceMethodInfo = @interface.GetMethod(mappingMethodName, argumentTypes);
 
-                        interfaceMethodInfo?.Invoke(instance, new object[] {this});
+                        interfaceMethodInfo?.Invoke(instance, new object[] { this });
                     }
             }
         }

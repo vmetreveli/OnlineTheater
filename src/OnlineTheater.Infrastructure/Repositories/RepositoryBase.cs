@@ -36,7 +36,7 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBase
         _context.Set<T>().AsNoTracking();
 
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        await _context.Set<T>().FindAsync(new object[] {id}, cancellationToken);
+        await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken);
 
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>

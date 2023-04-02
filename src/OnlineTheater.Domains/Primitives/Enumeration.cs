@@ -70,7 +70,7 @@ public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
         var fieldForType = enumerationType.GetFields(
                 BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
             .Where(fieldInfo => enumerationType.IsAssignableFrom(fieldInfo.FieldType))
-            .Select(fieldInfo => (TEnum) fieldInfo.GetValue(default)!);
+            .Select(fieldInfo => (TEnum)fieldInfo.GetValue(default)!);
         return fieldForType.ToDictionary(x => x.Value);
     }
 

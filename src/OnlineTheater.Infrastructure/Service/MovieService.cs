@@ -2,29 +2,28 @@
 using OnlineTheater.Domains.ValueObjects;
 using Referendum.Domain.Enums;
 
-namespace OnlineTheater.Infrastructure.Service
+namespace OnlineTheater.Infrastructure.Service;
+
+public class MovieService : IMovieService
 {
-    public class MovieService : IMovieService
+    public ExpirationDate GetExpirationDate(LicensingModel licensingModel)
     {
-        public ExpirationDate GetExpirationDate(LicensingModel licensingModel)
+        ExpirationDate result;
+
+        switch (licensingModel)
         {
-            ExpirationDate result;
+            case LicensingModel.TwoDays:
+                result = (ExpirationDate)DateTime.UtcNow.AddDays(2);
+                break;
 
-            switch (licensingModel)
-            {
-                case LicensingModel.TwoDays:
-                    result = (ExpirationDate)DateTime.UtcNow.AddDays(2);
-                    break;
+            case LicensingModel.LifeLong:
+                result = ExpirationDate.Infinite;
+                break;
 
-                case LicensingModel.LifeLong:
-                    result = ExpirationDate.Infinite;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return result;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
+
+        return result;
     }
 }

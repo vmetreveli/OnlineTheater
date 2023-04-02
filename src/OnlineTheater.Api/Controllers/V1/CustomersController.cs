@@ -41,11 +41,12 @@ public sealed class CustomersController : ApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateCustomerCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCustomerCommand command,
+        CancellationToken cancellationToken)
     {
-    var result = await Mediator.Send(command, cancellationToken);
+        var result = await Mediator.Send(command, cancellationToken);
 
-        return   result.Match<IActionResult>(
+        return result.Match<IActionResult>(
             value => Ok(value)
             , error => BadRequest(error));
     }

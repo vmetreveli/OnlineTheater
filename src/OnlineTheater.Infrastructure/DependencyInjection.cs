@@ -1,8 +1,6 @@
-﻿using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using OnlineTheater.Domains.Repository;
 using OnlineTheater.Domains.Services;
 using OnlineTheater.Infrastructure.Context;

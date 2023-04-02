@@ -1,8 +1,7 @@
-﻿namespace OnlineTheater.Applications.Contracts
+﻿namespace OnlineTheater.Applications.Contracts;
+
+public sealed class MovieDto
 {
-    public sealed class MovieDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }

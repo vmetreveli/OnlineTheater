@@ -3,4 +3,4 @@ using OnlineTheater.Applications.Contracts;
 
 namespace OnlineTheater.Applications.Features.Customer.Queries.GetAllCustomers;
 
-public sealed record GetAllCustomersQuery: IQuery<IQueryable<CustomerInListDto>>;
+public sealed record GetAllCustomersQuery : IQuery<IQueryable<CustomerInListDto>>;

@@ -16,10 +16,7 @@ public sealed class GetAllCustomersQueryHandler : IQueryHandler<GetAllCustomersQ
         CancellationToken cancellationToken)
     {
         var customers = await _customerRepository.GetAllAsync(cancellationToken);
-        if (!customers.Any())
-        {
-            return Error.NotFound();
-        }
+        if (!customers.Any()) return Error.NotFound();
 
         return ErrorOr.ErrorOr.From(customers
             .Select(x => new CustomerInListDto

@@ -6,15 +6,6 @@ namespace OnlineTheater.Domains.Entities;
 
 public sealed class Customer : EntityBase
 {
-    public CustomerName Name { get; private set; }
-
-    public Email Email { get; private set; }
-
-    public CustomerStatus Status { get; set; }
-    public ExpirationDate StatusExpirationDate { get; set; }
-    public Dollars MoneySpent { get; set; }
-    public IList<PurchasedMovie> PurchasedMovies { get; set; }
-
     private Customer()
     {
         // _purchasedMovies = new List<PurchasedMovie>();
@@ -31,8 +22,14 @@ public sealed class Customer : EntityBase
         StatusExpirationDate = null;
     }
 
-    public void UpdateCustomer(CustomerName name)
-    {
-        Name = name;
-    }
+    public CustomerName Name { get; private set; }
+
+    public Email Email { get; }
+
+    public CustomerStatus Status { get; set; }
+    public ExpirationDate StatusExpirationDate { get; set; }
+    public Dollars MoneySpent { get; set; }
+    public IList<PurchasedMovie> PurchasedMovies { get; set; }
+
+    public void UpdateCustomer(CustomerName name) => Name = name;
 }

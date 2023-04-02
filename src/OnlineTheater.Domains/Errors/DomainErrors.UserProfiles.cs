@@ -3,7 +3,7 @@
 /// <summary>
 ///     Contains the domain errors.
 /// </summary>
-public static partial class DomainErrors
+public static class DomainErrors
 {
     // public const string UserProfileNotFound = "No UserProfile found with ID {0}";
     public static class UserProfiles

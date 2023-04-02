@@ -1,9 +1,7 @@
-using System.Windows.Input;
 using OnlineTheater.Applications.Abstractions.Messaging;
 using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Repository;
 using OnlineTheater.Domains.Services;
-using Referendum.Domain.Enums;
 
 namespace OnlineTheater.Applications.Features.Customer.Commands.PromoteCustomer;
 
@@ -24,16 +22,11 @@ public sealed class PromoteCustomerCommandHandler : ICommandHandler<PromoteCusto
         if (customer == null)
             return Error.Failure(description: $"Invalid customer id: {request.UserId}");
 
-        if (customer is {Status: CustomerStatus.Advanced, StatusExpirationDate.IsExpired: false})
-        {
+        if (customer is { Status: CustomerStatus.Advanced, StatusExpirationDate.IsExpired: false })
             return Error.Conflict("The customer already has the Advanced status");
-        }
 
         var success = _customerService.PromoteCustomer(customer);
-        if (!success)
-        {
-            return Error.Conflict("Cannot promote the customer");
-        }
+        if (!success) return Error.Conflict("Cannot promote the customer");
 
         await _customerRepository.SaveChangesAsync(cancellationToken);
 

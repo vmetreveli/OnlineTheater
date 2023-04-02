@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using OnlineTheater.Domains.Primitives;
 using OnlineTheater.Domains.ValueObjects;
 

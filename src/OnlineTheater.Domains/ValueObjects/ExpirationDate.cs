@@ -4,9 +4,6 @@ namespace OnlineTheater.Domains.ValueObjects;
 
 public sealed class ExpirationDate : ValueObject
 {
-    public DateTime? Date { get; }
-    public bool IsExpired => this != Infinite || Date < DateTime.UtcNow;
-
     public static readonly ExpirationDate Infinite = new(null);
 
     private ExpirationDate()
@@ -15,6 +12,9 @@ public sealed class ExpirationDate : ValueObject
 
     private ExpirationDate(DateTime? date)
         => Date = date;
+
+    public DateTime? Date { get; }
+    public bool IsExpired => this != Infinite || Date < DateTime.UtcNow;
 
     public static ErrorOr<ExpirationDate> Create(DateTime date)
         => new ExpirationDate(date);

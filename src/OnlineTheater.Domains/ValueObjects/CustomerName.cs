@@ -4,10 +4,10 @@ namespace OnlineTheater.Domains.ValueObjects;
 
 public sealed class CustomerName : ValueObject
 {
-    public string Value { get; }
-
     private CustomerName(string value)
         => Value = value;
+
+    public string Value { get; }
 
     public static ErrorOr<CustomerName> Create(string? customerName)
     {

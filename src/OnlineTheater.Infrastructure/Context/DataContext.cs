@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using OnlineTheater.Domains.Entities;
-using Referendum.Domain.Errors;
 
 namespace OnlineTheater.Infrastructure.Context;
 
@@ -26,5 +25,6 @@ public sealed class DataContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Movie> Movies { get; set; }
     public DbSet<PurchasedMovie> PurchasedMovies { get; set; }
+
     #endregion
 }

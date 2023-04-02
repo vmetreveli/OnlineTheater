@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineTheater.Domains.Entities;
-using OnlineTheater.Domains.Errors;
 
 namespace OnlineTheater.Infrastructure.Context.Configurations;
 
