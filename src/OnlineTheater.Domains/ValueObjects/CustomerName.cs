@@ -1,9 +1,8 @@
-using CSharpFunctionalExtensions;
 using OnlineTheater.Domains.Primitives;
 
 namespace OnlineTheater.Domains.ValueObjects;
 
-public sealed class CustomerName : ValueObject<CustomerName>
+public sealed class CustomerName : ValueObject
 {
     public string Value { get; }
 
@@ -21,24 +20,15 @@ public sealed class CustomerName : ValueObject<CustomerName>
         };
     }
 
+    public static implicit operator string?(CustomerName name)
+        => name.Value;
 
-    protected override bool EqualsCore(CustomerName other)
-    {
-        return Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
-    }
 
-    protected override int GetHashCodeCore()
-    {
-        return Value.GetHashCode();
-    }
+    public static explicit operator CustomerName(string? name)
+        => Create(name).Value;
 
-    public static implicit operator string(CustomerName customerName)
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return customerName.Value;
-    }
-
-    public static explicit operator CustomerName(string customerName)
-    {
-        return Create(customerName).Value;
+        yield return Value;
     }
 }

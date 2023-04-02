@@ -28,13 +28,13 @@ public sealed class GetCustomerByIdQueryHandler : IQueryHandler<GetCustomerByIdQ
             Id = res.Id,
             Name = res.Name.Value,
             Email = res.Email.Value,
-            MoneySpent = res.MoneySpent,
+            MoneySpent = res.MoneySpent.Value,
             Status = res.Status.ToString(),
             StatusExpirationDate = res.StatusExpirationDate,
             PurchasedMovies = res.PurchasedMovies
                 .Select(x => new PurchasedMovieDto
                 {
-                    Price = x.Price,
+                    Price = x.Price.Value,
                     ExpirationDate = x.ExpirationDate,
                     PurchaseDate = x.PurchaseDate,
                     Movie = new MovieDto

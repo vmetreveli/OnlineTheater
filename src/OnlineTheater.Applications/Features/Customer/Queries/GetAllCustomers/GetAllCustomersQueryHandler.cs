@@ -27,7 +27,7 @@ public sealed class GetAllCustomersQueryHandler : IQueryHandler<GetAllCustomersQ
                 Id = x.Id,
                 Name = x.Name.Value,
                 Email = x.Email.Value,
-                MoneySpent = x.MoneySpent,
+                MoneySpent = x.MoneySpent.Value,
                 Status = x.Status.ToString(),
                 StatusExpirationDate = x.StatusExpirationDate
             }));

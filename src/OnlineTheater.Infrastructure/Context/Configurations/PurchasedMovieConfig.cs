@@ -11,7 +11,15 @@ internal sealed class PurchasedMovieConfig : IEntityTypeConfiguration<PurchasedM
         builder.ToTable("PurchasedMovies");
         builder.HasKey(m => m.Id);
 
-        builder.Property(m => m.Price);
+        builder.OwnsOne(e => e.Price, modelNameBuilder =>
+            modelNameBuilder
+                .Property(l => l.Value)
+                .HasColumnName(nameof(Customer.MoneySpent))
+                .HasColumnType("decimal(18, 2)")
+                .IsRequired());
+
+        builder.Navigation(n => n.Price);
+
         builder.Property(m => m.PurchaseDate);
         builder.Property(m => m.ExpirationDate);
         builder.Property(m => m.MovieId);

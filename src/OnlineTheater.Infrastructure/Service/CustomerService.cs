@@ -1,6 +1,7 @@
 using OnlineTheater.Domains.Entities;
 using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Services;
+using OnlineTheater.Domains.ValueObjects;
 using Referendum.Domain.Enums;
 
 namespace OnlineTheater.Infrastructure.Service
@@ -15,17 +16,17 @@ namespace OnlineTheater.Infrastructure.Service
             _movieService = movieService;
         }
 
-        public decimal CalculatePrice(CustomerStatus status, DateTime? statusExpirationDate, LicensingModel licensingModel)
+        public Dollars CalculatePrice(CustomerStatus status, DateTime? statusExpirationDate, LicensingModel licensingModel)
         {
-            decimal price;
+            Dollars price;
             switch (licensingModel)
             {
                 case LicensingModel.TwoDays:
-                    price = 4;
+                    price = Dollars.Of(4);
                     break;
 
                 case LicensingModel.LifeLong:
-                    price = 8;
+                    price = Dollars.Of(8);
                     break;
 
                 default:
@@ -43,7 +44,7 @@ namespace OnlineTheater.Infrastructure.Service
         public void PurchaseMovie(Customer customer, Movie movie)
         {
             DateTime? expirationDate = _movieService.GetExpirationDate(movie.LicensingModel);
-            decimal price = CalculatePrice(customer.Status, customer.StatusExpirationDate, movie.LicensingModel);
+            Dollars price = CalculatePrice(customer.Status, customer.StatusExpirationDate, movie.LicensingModel);
 
             var purchasedMovie = new PurchasedMovie
             {
@@ -64,7 +65,8 @@ namespace OnlineTheater.Infrastructure.Service
                 return false;
 
             // at least 100 dollars spent during the last year
-            if (customer.PurchasedMovies.Where(x => x.PurchaseDate > DateTime.UtcNow.AddYears(-1)).Sum(x => x.Price) < 100m)
+            if (customer.PurchasedMovies.Where(x => x.PurchaseDate > DateTime.UtcNow.AddYears(-1))
+                    .Sum(x => x.Price.Value) < 100m)
                 return false;
 
             customer.Status = CustomerStatus.Advanced;

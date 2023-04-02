@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using OnlineTheater.Domains.Primitives;
+using OnlineTheater.Domains.ValueObjects;
 
 namespace OnlineTheater.Domains.Entities;
 
@@ -11,7 +12,7 @@ public sealed class PurchasedMovie : EntityBase
 
     public Guid CustomerId { get; set; }
 
-    public decimal Price { get; set; }
+    public Dollars Price { get; set; }
 
     public DateTime PurchaseDate { get; set; }
 

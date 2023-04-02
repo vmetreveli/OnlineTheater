@@ -7,5 +7,5 @@ public sealed class CustomerInListDto
     public string Email { get; set; }
     public string Status { get; set; }
     public DateTime? StatusExpirationDate { get; set; }
-    public decimal MoneySpent { get; set; }
+    public decimal? MoneySpent { get; set; }
 }

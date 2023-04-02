@@ -12,7 +12,7 @@ public sealed class Customer : EntityBase
 
     public CustomerStatus Status { get; set; }
     public DateTime? StatusExpirationDate { get; set; }
-    public decimal MoneySpent { get; set; }
+    public Dollars MoneySpent { get; set; }
     public IList<PurchasedMovie> PurchasedMovies { get; set; }
 
     private Customer()
@@ -25,7 +25,7 @@ public sealed class Customer : EntityBase
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Email = email ?? throw new ArgumentNullException(nameof(email));
 
-        MoneySpent = 0;
+        MoneySpent = Dollars.Of(0);
         Status = CustomerStatus.Regular;
 
         StatusExpirationDate = null;
