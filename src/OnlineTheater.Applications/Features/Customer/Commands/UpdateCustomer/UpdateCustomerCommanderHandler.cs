@@ -1,7 +1,3 @@
-using OnlineTheater.Applications.Abstractions.Messaging;
-using OnlineTheater.Domains.Repository;
-using OnlineTheater.Domains.ValueObjects;
-
 namespace OnlineTheater.Applications.Features.Customer.Commands.UpdateCustomer;
 
 public sealed class UpdateCustomerCommanderHandler : ICommandHandler<UpdateCustomerCommander, Unit>
@@ -22,7 +18,7 @@ public sealed class UpdateCustomerCommanderHandler : ICommandHandler<UpdateCusto
 
         // customer.Name = customerNameOrError.Value;
         customer.UpdateCustomer(customerNameOrError.Value);
-        _customerRepository.SaveChangesAsync(cancellationToken);
+       await _customerRepository.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
 }

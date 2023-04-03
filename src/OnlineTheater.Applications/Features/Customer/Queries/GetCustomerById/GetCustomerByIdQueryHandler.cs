@@ -1,6 +1,4 @@
-﻿using OnlineTheater.Applications.Abstractions.Messaging;
-using OnlineTheater.Applications.Contracts;
-using OnlineTheater.Domains.Repository;
+﻿using OnlineTheater.Applications.Contracts;
 
 namespace OnlineTheater.Applications.Features.Customer.Queries.GetCustomerById;
 

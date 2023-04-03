@@ -1,6 +1,4 @@
-using OnlineTheater.Applications.Abstractions.Messaging;
 using OnlineTheater.Domains.Enums;
-using OnlineTheater.Domains.Repository;
 using OnlineTheater.Domains.Services;
 
 namespace OnlineTheater.Applications.Features.Customer.Commands.PromoteCustomer;

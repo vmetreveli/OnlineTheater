@@ -1,7 +1,3 @@
-using OnlineTheater.Applications.Abstractions.Messaging;
-using OnlineTheater.Domains.Repository;
-using OnlineTheater.Domains.ValueObjects;
-
 namespace OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
 
 public sealed class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, Unit>

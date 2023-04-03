@@ -11,7 +11,7 @@ public sealed class Customer : EntityBase
         // _purchasedMovies = new List<PurchasedMovie>();
     }
 
-    public Customer(CustomerName name, Email email) : this()
+    public Customer(CustomerName name, Email email)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Email = email ?? throw new ArgumentNullException(nameof(email));
