@@ -26,8 +26,8 @@ public sealed class Customer : EntityBase
 
     public CustomerStatus Status { get; set; }
     public Dollars MoneySpent { get; private set; }
-    private readonly IList<PurchasedMovie> _purchasedMovies;
-    public IEnumerable<PurchasedMovie> PurchasedMovies => _purchasedMovies.ToList();
+    private readonly IList<PurchasedMovie?> _purchasedMovies;
+    public IEnumerable<PurchasedMovie?> PurchasedMovies => _purchasedMovies.ToList();
 
     public void UpdateCustomer(CustomerName name) => Name = name;
 
