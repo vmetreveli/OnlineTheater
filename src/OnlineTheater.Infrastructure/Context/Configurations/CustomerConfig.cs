@@ -36,14 +36,14 @@ internal sealed class CustomerConfig : IEntityTypeConfiguration<Customer>
 
         builder.Navigation(n => n.MoneySpent);
 
-        builder.OwnsOne(e => e.StatusExpirationDate, modelNameBuilder =>
+        builder.OwnsOne(e => e.Status, modelNameBuilder =>
             modelNameBuilder
-                .Property(l => l.Date)
-                .HasColumnName(nameof(Customer.StatusExpirationDate)));
+                .Property(l => l.Type)
+                .HasColumnName(nameof(Customer.Status.Type)));
 
-        builder.Navigation(n => n.StatusExpirationDate);
+        builder.Navigation(n => n.Status);
 
-        builder.Property(c => c.Status);
+
 
 
         builder.HasMany(x => x.PurchasedMovies);

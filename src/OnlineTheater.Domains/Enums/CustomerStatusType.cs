@@ -1,6 +1,6 @@
 namespace OnlineTheater.Domains.Enums;
 
-public enum CustomerStatus
+public enum CustomerStatusType
 {
     Regular = 1,
     Advanced = 2

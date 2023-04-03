@@ -27,8 +27,8 @@ public sealed class GetCustomerByIdQueryHandler : IQueryHandler<GetCustomerByIdQ
             Name = res.Name.Value,
             Email = res.Email.Value,
             MoneySpent = res.MoneySpent.Value,
-            Status = res.Status.ToString(),
-            StatusExpirationDate = res.StatusExpirationDate.Date,
+            Status = res.Status.Type.ToString(),
+            StatusExpirationDate = res.Status.ExpirationDate,
             PurchasedMovies = res.PurchasedMovies
                 ?.Select(x => new PurchasedMovieDto
                 {

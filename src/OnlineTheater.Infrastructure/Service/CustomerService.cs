@@ -12,8 +12,7 @@ public class CustomerService : ICustomerService
 
     public CustomerService(IMovieService movieService) => _movieService = movieService;
 
-    public Dollars CalculatePrice(CustomerStatus status, ExpirationDate statusExpirationDate,
-        LicensingModel licensingModel)
+    public Dollars CalculatePrice(CustomerStatus status, LicensingModel licensingModel)
     {
         Dollars price;
         switch (licensingModel)
@@ -30,7 +29,7 @@ public class CustomerService : ICustomerService
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (status == CustomerStatus.Advanced && !statusExpirationDate.IsExpired) price = price * 0.75m;
+        if (status.IsAdvance) price = price * 0.75m;
 
         return price;
     }
@@ -38,22 +37,12 @@ public class CustomerService : ICustomerService
     public void PurchaseMovie(Customer customer, Movie movie)
     {
         var expirationDate = _movieService.GetExpirationDate(movie.LicensingModel);
-        var price = CalculatePrice(customer.Status, customer.StatusExpirationDate, movie.LicensingModel);
+        var price = CalculatePrice(customer.Status, movie.LicensingModel);
 
-        var purchasedMovie = new PurchasedMovie
-        {
-            MovieId = movie.Id,
-            CustomerId = customer.Id,
-            ExpirationDate = expirationDate,
-            Price = price,
-            PurchaseDate = DateTime.UtcNow
-        };
-
-        customer.PurchasedMovies.Add(purchasedMovie);
-        customer.MoneySpent += price;
+        customer.AddPurchasedMovie(movie, expirationDate, price);
     }
 
-    public bool PromoteCustomer(Customer customer=default)
+    public bool PromoteCustomer(Customer customer = default)
     {
         // at least 2 active movies during the last 30 days
         if (customer.PurchasedMovies.Count(x =>
@@ -66,9 +55,7 @@ public class CustomerService : ICustomerService
                 .Sum(x => x.Price?.Value) < 100m)
             return false;
 
-        customer.Status = CustomerStatus.Advanced;
-        customer.StatusExpirationDate = (ExpirationDate)DateTime.UtcNow.AddYears(1);
-
+        customer.Status = customer.Status.Promote();
         return true;
     }
 }

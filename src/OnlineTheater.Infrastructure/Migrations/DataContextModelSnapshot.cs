@@ -40,15 +40,6 @@ namespace OnlineTheater.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("MoneySpent")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("StatusExpirationDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.HasKey("Id");
 
                     b.ToTable("Customers", (string)null);
@@ -76,7 +67,6 @@ namespace OnlineTheater.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -99,9 +89,6 @@ namespace OnlineTheater.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<bool>("IsDelete")
                         .HasColumnType("boolean");
 
@@ -110,9 +97,6 @@ namespace OnlineTheater.Infrastructure.Migrations
 
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uuid");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("timestamp with time zone");
@@ -128,6 +112,24 @@ namespace OnlineTheater.Infrastructure.Migrations
 
             modelBuilder.Entity("OnlineTheater.Domains.Entities.Customer", b =>
                 {
+                    b.OwnsOne("OnlineTheater.Domains.ValueObjects.Dollars", "MoneySpent", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal?>("Value")
+                                .IsRequired()
+                                .HasColumnType("decimal(18, 2)")
+                                .HasColumnName("MoneySpent");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
                     b.OwnsOne("OnlineTheater.Domains.ValueObjects.CustomerName", "Name", b1 =>
                         {
                             b1.Property<Guid>("CustomerId")
@@ -137,6 +139,23 @@ namespace OnlineTheater.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("Name");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
+                    b.OwnsOne("OnlineTheater.Domains.ValueObjects.CustomerStatus", "Status", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("integer")
+                                .HasColumnName("Type");
 
                             b1.HasKey("CustomerId");
 
@@ -167,7 +186,13 @@ namespace OnlineTheater.Infrastructure.Migrations
                     b.Navigation("Email")
                         .IsRequired();
 
+                    b.Navigation("MoneySpent")
+                        .IsRequired();
+
                     b.Navigation("Name")
+                        .IsRequired();
+
+                    b.Navigation("Status")
                         .IsRequired();
                 });
 
@@ -185,7 +210,46 @@ namespace OnlineTheater.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("OnlineTheater.Domains.ValueObjects.Dollars", "Price", b1 =>
+                        {
+                            b1.Property<Guid>("PurchasedMovieId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal?>("Value")
+                                .IsRequired()
+                                .HasColumnType("decimal(18, 2)")
+                                .HasColumnName("Price");
+
+                            b1.HasKey("PurchasedMovieId");
+
+                            b1.ToTable("PurchasedMovies");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PurchasedMovieId");
+                        });
+
+                    b.OwnsOne("OnlineTheater.Domains.ValueObjects.ExpirationDate", "ExpirationDate", b1 =>
+                        {
+                            b1.Property<Guid>("PurchasedMovieId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime?>("Date")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("ExpirationDate");
+
+                            b1.HasKey("PurchasedMovieId");
+
+                            b1.ToTable("PurchasedMovies");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PurchasedMovieId");
+                        });
+
+                    b.Navigation("ExpirationDate");
+
                     b.Navigation("Movie");
+
+                    b.Navigation("Price");
                 });
 
             modelBuilder.Entity("OnlineTheater.Domains.Entities.Customer", b =>
