@@ -14,20 +14,12 @@ public class CustomerService : ICustomerService
 
     public Dollars CalculatePrice(CustomerStatus status, LicensingModel licensingModel)
     {
-        Dollars price;
-        switch (licensingModel)
+        var price = licensingModel switch
         {
-            case LicensingModel.TwoDays:
-                price = Dollars.Of(4);
-                break;
-
-            case LicensingModel.LifeLong:
-                price = Dollars.Of(8);
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            LicensingModel.TwoDays => Dollars.Of(4),
+            LicensingModel.LifeLong => Dollars.Of(8),
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
         if (status.IsAdvance) price = price * 0.75m;
 
@@ -47,7 +39,7 @@ public class CustomerService : ICustomerService
         // at least 2 active movies during the last 30 days
         if (customer.PurchasedMovies.Count(x =>
                 x.ExpirationDate == ExpirationDate.Infinite ||
-                x.ExpirationDate.Date >= DateTime.UtcNow.AddDays(-30)) < 2)
+                x.ExpirationDate >= DateTime.UtcNow.AddDays(-30)) < 2)
             return false;
 
         // at least 100 dollars spent during the last year
