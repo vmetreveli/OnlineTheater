@@ -12,7 +12,7 @@ public class CustomerService : ICustomerService
 
     public CustomerService(IMovieService movieService) => _movieService = movieService;
 
-    public Dollars CalculatePrice(CustomerStatus status, ExpirationDate? statusExpirationDate,
+    public Dollars CalculatePrice(CustomerStatus status, ExpirationDate statusExpirationDate,
         LicensingModel licensingModel)
     {
         Dollars price;
@@ -53,7 +53,7 @@ public class CustomerService : ICustomerService
         customer.MoneySpent += price;
     }
 
-    public bool PromoteCustomer(Customer customer)
+    public bool PromoteCustomer(Customer customer=default)
     {
         // at least 2 active movies during the last 30 days
         if (customer.PurchasedMovies.Count(x =>
@@ -63,7 +63,7 @@ public class CustomerService : ICustomerService
 
         // at least 100 dollars spent during the last year
         if (customer.PurchasedMovies.Where(x => x.PurchaseDate > DateTime.UtcNow.AddYears(-1))
-                .Sum(x => x.Price.Value) < 100m)
+                .Sum(x => x.Price?.Value) < 100m)
             return false;
 
         customer.Status = CustomerStatus.Advanced;

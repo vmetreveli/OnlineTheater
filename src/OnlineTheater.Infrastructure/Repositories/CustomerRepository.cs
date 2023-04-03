@@ -12,7 +12,7 @@ public sealed class CustomerRepository : RepositoryBase<Customer>, ICustomerRepo
     public CustomerRepository(DbContext context, DbContext dbContext) : base(context)
         => _dbContext = dbContext;
 
-    public async Task<Customer> GetByEmailAsync(Email email, CancellationToken cancellationToken) =>
-        await _dbContext.Set<Customer?>()
+    public async Task<Customer?> GetByEmailAsync(Email email, CancellationToken cancellationToken) =>
+        await _dbContext.Set<Customer>()
             .FirstOrDefaultAsync(x => x.Email.Value == email.Value, cancellationToken);
 }
