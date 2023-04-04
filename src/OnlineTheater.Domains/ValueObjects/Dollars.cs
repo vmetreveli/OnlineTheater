@@ -15,7 +15,7 @@ public sealed class Dollars : ValueObject
 
     public decimal? Value { get; }
 
-    public static ErrorOr<Dollars> Create(decimal? dollarAmount)
+    private static ErrorOr<Dollars> Create(decimal? dollarAmount)
     {
         switch (dollarAmount)
         {

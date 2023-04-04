@@ -16,7 +16,7 @@ public sealed class ExpirationDate : ValueObject
     public DateTime? Date { get; }
     public  bool IsExpired => this != Infinite || Date < DateTime.UtcNow;
 
-    public static ErrorOr<ExpirationDate> Create(DateTime date)
+    private static ErrorOr<ExpirationDate> Create(DateTime date)
         => new ExpirationDate(date);
 
 

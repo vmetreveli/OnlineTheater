@@ -1,6 +1,6 @@
 ﻿using OnlineTheater.Domains.Primitives.Events;
 
-namespace Referendum.Domain.Events;
+namespace OnlineTheater.Domains.Events;
 
 /// <summary>
 ///     Represents the event that is raised when a user is created.

@@ -3,7 +3,7 @@
 /// <summary>
 ///     Contains the domain errors.
 /// </summary>
-public static class DomainErrors
+public static partial class DomainErrors
 {
     /// <summary>
     ///     Contains the user errors.

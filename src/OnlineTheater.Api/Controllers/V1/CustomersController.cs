@@ -18,7 +18,7 @@ public sealed class CustomersController : ApiController
 
 
     [HttpGet]
-    [Route("{id}")]
+    [Route("{id:guid}")]
     public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetCustomerByIdQuery(id);
@@ -63,7 +63,7 @@ public sealed class CustomersController : ApiController
     }
 
     [HttpPost]
-    [Route("{id}/movies")]
+    [Route("{id:guid}/movies")]
     public async Task<IActionResult> PurchaseMovie(Guid id, [FromBody] Guid movieId,
         CancellationToken cancellationToken)
     {
@@ -80,7 +80,7 @@ public sealed class CustomersController : ApiController
 
 
     [HttpPost]
-    [Route("{id}/promotion")]
+    [Route("{id:guid}/promotion")]
     public async Task<IActionResult> PromoteCustomer(Guid id, CancellationToken cancellationToken)
     {
         var command = new PromoteCustomerCommand
