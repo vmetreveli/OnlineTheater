@@ -1,7 +1,7 @@
 using OnlineTheater.Api;
 using OnlineTheater.Api.Middleware;
+using OnlineTheater.Applications;
 using OnlineTheater.Infrastructure;
-using Referendum.Application;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

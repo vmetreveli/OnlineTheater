@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Referendum.Application;
 
 namespace OnlineTheater.Applications.Behaviours;
 

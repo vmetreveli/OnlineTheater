@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using ErrorOr;
-using Referendum.Application.Exceptions;
+using OnlineTheater.Applications.Exceptions;
 
 namespace OnlineTheater.Api.Middleware;
 

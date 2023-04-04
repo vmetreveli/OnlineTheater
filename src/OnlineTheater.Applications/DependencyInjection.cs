@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using OnlineTheater.Applications.Behaviours;
 
-namespace Referendum.Application;
+namespace OnlineTheater.Applications;
 
 public static class DependencyInjection
 {

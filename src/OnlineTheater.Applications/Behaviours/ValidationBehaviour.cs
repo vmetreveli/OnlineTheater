@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ValidationException = Referendum.Application.Exceptions.ValidationException;
+using ValidationException = OnlineTheater.Applications.Exceptions.ValidationException;
 
 namespace OnlineTheater.Applications.Behaviours;
 

@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace Referendum.Application.Exceptions;
+namespace OnlineTheater.Applications.Exceptions;
 
 public sealed class ValidationException : Exception
 {

@@ -2,7 +2,6 @@ using OnlineTheater.Domains.Entities;
 using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Services;
 using OnlineTheater.Domains.ValueObjects;
-using Referendum.Domain.Enums;
 
 namespace OnlineTheater.Infrastructure.Service;
 

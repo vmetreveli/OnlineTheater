@@ -1,5 +1,5 @@
+using OnlineTheater.Domains.Enums;
 using OnlineTheater.Domains.Primitives;
-using Referendum.Domain.Enums;
 
 namespace OnlineTheater.Domains.Entities;
 
