@@ -36,7 +36,7 @@ public sealed class CustomersController : ApiController
         var result = await Mediator.Send(query, cancellationToken);
 
         return result.MatchFirst<IActionResult>(
-            value => Ok(value)
+            Ok
             , error => NotFound());
     }
 
@@ -48,7 +48,7 @@ public sealed class CustomersController : ApiController
 
         return result.Match<IActionResult>(
             value => Ok(value)
-            , error => BadRequest(error));
+            , BadRequest);
     }
 
     [HttpPut]
@@ -59,7 +59,7 @@ public sealed class CustomersController : ApiController
         var result = await Mediator.Send(command, cancellationToken);
         return result.Match<IActionResult>(
             value => Ok(value)
-            , error => BadRequest(error));
+            , BadRequest);
     }
 
     [HttpPost]
