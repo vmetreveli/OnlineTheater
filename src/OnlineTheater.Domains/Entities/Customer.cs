@@ -7,9 +7,7 @@ namespace OnlineTheater.Domains.Entities;
 public sealed class Customer : EntityBase
 {
     private Customer()
-    {
-        _purchasedMovies = new List<PurchasedMovie>();
-    }
+        => _purchasedMovies = new List<PurchasedMovie>();
 
     public Customer(CustomerName name, Email email) : this()
     {
@@ -20,13 +18,13 @@ public sealed class Customer : EntityBase
         Status = CustomerStatus.Regular;
     }
 
-    public CustomerName Name { get; private set; }
+    public CustomerName? Name { get; private set; }
 
-    public Email Email { get; private set; }
+    public Email? Email { get; private set; }
 
-    public CustomerStatus Status { get; set; }
-    public Dollars MoneySpent { get; private set; }
-    private readonly IList<PurchasedMovie?> _purchasedMovies;
+    public CustomerStatus? Status { get; set; }
+    public Dollars? MoneySpent { get; private set; }
+    private readonly IList<PurchasedMovie> _purchasedMovies;
     public IEnumerable<PurchasedMovie?> PurchasedMovies => _purchasedMovies.ToList();
 
     public void UpdateCustomer(CustomerName name) => Name = name;

@@ -7,8 +7,8 @@ public sealed class CustomerStatus : ValueObject
 {
     public static readonly CustomerStatus Regular = new CustomerStatus(CustomerStatusType.Regular, ExpirationDate.Infinite);
     public bool IsAdvance => Type == CustomerStatusType.Advanced && !ExpirationDate.IsExpired;
-    public CustomerStatusType Type { get; }
-    public ExpirationDate ExpirationDate { get; }
+    public CustomerStatusType? Type { get; }
+    public ExpirationDate? ExpirationDate { get; }
 
     private CustomerStatus()
     {

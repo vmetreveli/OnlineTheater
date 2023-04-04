@@ -29,6 +29,6 @@ public sealed class ExpirationDate : ValueObject
 
     protected override IEnumerable<object> GetAtomicValues()
     {
-        yield return Date;
+        yield return Date!;
     }
 }

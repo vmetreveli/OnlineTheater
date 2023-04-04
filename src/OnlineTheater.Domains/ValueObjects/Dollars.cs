@@ -47,6 +47,6 @@ public sealed class Dollars : ValueObject
 
     protected override IEnumerable<object> GetAtomicValues()
     {
-        yield return Value;
+        yield return Value!;
     }
 }
