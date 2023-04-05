@@ -31,14 +31,8 @@ public sealed class Customer : EntityBase
 
     public void AddPurchasedMovie(Movie movie, ExpirationDate expirationDate, Dollars dollars)
     {
-        var purchasedMovie = new PurchasedMovie
-        {
-            MovieId = movie.Id,
-            CustomerId = Id,
-            ExpirationDate = expirationDate,
-            Price = dollars,
-            PurchaseDate = DateTime.UtcNow
-        };
+        var purchasedMovie = new PurchasedMovie(movie, this, dollars, expirationDate);
+
         _purchasedMovies.Add(purchasedMovie);
         MoneySpent += dollars;
     }

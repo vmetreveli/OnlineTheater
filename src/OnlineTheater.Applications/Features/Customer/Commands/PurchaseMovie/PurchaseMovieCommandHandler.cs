@@ -25,7 +25,7 @@ public sealed class PurchaseMovieCommandHandler : ICommandHandler<PurchaseMovieC
         if (customer == null) return Error.Failure(description: $"Invalid customer id: {request.UserId}");
 
         if (customer.PurchasedMovies.Any(x =>
-                x.MovieId == movie.Id && !x.ExpirationDate.IsExpired))
+                x.Movie.Id == movie.Id && !x.ExpirationDate.IsExpired))
             return Error.Conflict(description: $"The movie is already purchased:: {movie.Name}");
 
         _customerService.PurchaseMovie(customer, movie);

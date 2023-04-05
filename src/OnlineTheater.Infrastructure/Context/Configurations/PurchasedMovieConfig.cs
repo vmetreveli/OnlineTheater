@@ -27,11 +27,13 @@ internal sealed class PurchasedMovieConfig : IEntityTypeConfiguration<PurchasedM
                 .HasColumnName(nameof(PurchasedMovie.ExpirationDate)));
 
         builder.Navigation(n => n.ExpirationDate);
-        builder.Property(m => m.MovieId);
-        builder.Property(m => m.CustomerId);
 
         builder.HasOne(x => x.Movie)
-            .WithMany().HasForeignKey(x => x.MovieId)
+            .WithMany().HasForeignKey(x => x.Movie)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(x => x.Customer)
+            .WithMany().HasForeignKey(x => x.Customer)
             .OnDelete(DeleteBehavior.Cascade);
 
 

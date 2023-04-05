@@ -11,9 +11,10 @@ public sealed class Dollars : ValueObject
     }
 
     private Dollars(decimal? value)
-        => Value = value;
+        => Value = (decimal)value;
 
-    public decimal? Value { get; }
+    public decimal Value { get; }
+    public bool IsZero => Value==0;
 
     private static ErrorOr<Dollars> Create(decimal? dollarAmount)
     {
@@ -32,7 +33,7 @@ public sealed class Dollars : ValueObject
             : new Dollars(dollarAmount);
     }
 
-    public static Dollars Of(decimal? value)
+    public static Dollars Of(decimal value)
         => Create(value).Value;
 
     public static Dollars operator *(Dollars dollars, decimal multiplier) =>
@@ -43,6 +44,11 @@ public sealed class Dollars : ValueObject
 
     // public static explicit operator Dollars(decimal? value)
     //     => Create(value).Value;
+
+    public static implicit operator decimal(Dollars dollars)
+    {
+        return dollars.Value;
+    }
 
 
     protected override IEnumerable<object> GetAtomicValues()
