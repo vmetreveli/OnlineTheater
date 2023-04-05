@@ -18,15 +18,15 @@ public sealed class CustomersController : ApiController
 
 
     [HttpGet]
-    [Route("{id:guid}")]
-    public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
+    [Route("{userId:guid}")]
+    public async Task<IActionResult> Get(Guid userId, CancellationToken cancellationToken)
     {
-        var query = new GetCustomerByIdQuery(id);
+        var query = new GetCustomerByIdQuery(userId);
         var result = await Mediator.Send(query, cancellationToken);
 
         return result.MatchFirst<IActionResult>(
-            value => Ok(value)
-            , error => NotFound());
+            Ok
+            ,  _=>NotFound());
     }
 
     [HttpGet]
@@ -37,7 +37,7 @@ public sealed class CustomersController : ApiController
 
         return result.MatchFirst<IActionResult>(
             Ok
-            , error => NotFound());
+            , _ => NotFound());
     }
 
     [HttpPost]
@@ -52,7 +52,6 @@ public sealed class CustomersController : ApiController
     }
 
     [HttpPut]
-    //[Route()]
     public async Task<IActionResult> Update([FromBody] UpdateCustomerCommander command,
         CancellationToken cancellationToken)
     {
@@ -63,15 +62,10 @@ public sealed class CustomersController : ApiController
     }
 
     [HttpPost]
-    [Route("{id:guid}/movies")]
-    public async Task<IActionResult> PurchaseMovie(Guid id, [FromBody] Guid movieId,
-        CancellationToken cancellationToken)
+    [Route("/movies")]
+    public async Task<IActionResult> PurchaseMovie([FromBody]PurchaseMovieCommand command, CancellationToken cancellationToken)
     {
-        var command = new PurchaseMovieCommand
-        {
-            UserId = id,
-            MovieId = movieId
-        };
+
         var result = await Mediator.Send(command, cancellationToken);
         return result.MatchFirst<IActionResult>(
             value => Ok(value)
@@ -80,13 +74,9 @@ public sealed class CustomersController : ApiController
 
 
     [HttpPost]
-    [Route("{id:guid}/promotion")]
-    public async Task<IActionResult> PromoteCustomer(Guid id, CancellationToken cancellationToken)
+    [Route("/promotion")]
+    public async Task<IActionResult> PromoteCustomer(PromoteCustomerCommand command, CancellationToken cancellationToken)
     {
-        var command = new PromoteCustomerCommand
-        {
-            UserId = id
-        };
         var result = await Mediator.Send(command, cancellationToken);
         return result.MatchFirst<IActionResult>(
             value => Ok(value)
