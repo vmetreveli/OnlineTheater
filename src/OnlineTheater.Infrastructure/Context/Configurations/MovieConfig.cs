@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineTheater.Domains.Entities;
+using OnlineTheater.Domains.Enums;
 
 namespace OnlineTheater.Infrastructure.Context.Configurations;
 
@@ -12,13 +13,11 @@ internal sealed class MovieConfig : IEntityTypeConfiguration<Movie>
         builder.HasKey(m => m.Id);
 
         builder.Property(m => m.Name);
-        builder.Property<int>("LicensingModel");
+        builder.Property(x => x.LicensingModel);
 
-        builder.HasDiscriminator<int>("LicensingModel")
-            .HasValue<TwoDaysMovie>(1)
-            .HasValue<LifeLongMovie>(2);
-
-        builder.ToTable("Movies");
+        builder.HasDiscriminator(x=>x.LicensingModel)
+            .HasValue<TwoDaysMovie>(LicensingModel.TwoDays)
+            .HasValue<LifeLongMovie>(LicensingModel.LifeLong);
 
 
         builder.Property(c => c.CreatedOn).IsRequired();

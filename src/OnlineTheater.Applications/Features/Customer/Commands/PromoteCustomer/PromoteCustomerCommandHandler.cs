@@ -1,18 +1,11 @@
-using OnlineTheater.Domains.Enums;
-using OnlineTheater.Domains.Services;
-
 namespace OnlineTheater.Applications.Features.Customer.Commands.PromoteCustomer;
 
 public sealed class PromoteCustomerCommandHandler : ICommandHandler<PromoteCustomerCommand, Unit>
 {
     private readonly ICustomerRepository _customerRepository;
-    private readonly ICustomerService _customerService;
 
-    public PromoteCustomerCommandHandler(ICustomerRepository customerRepository, ICustomerService customerService)
-    {
+    public PromoteCustomerCommandHandler(ICustomerRepository customerRepository) =>
         _customerRepository = customerRepository;
-        _customerService = customerService;
-    }
 
     public async Task<ErrorOr<Unit>> Handle(PromoteCustomerCommand request, CancellationToken cancellationToken)
     {

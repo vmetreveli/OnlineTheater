@@ -9,32 +9,35 @@ internal sealed class PurchasedMovieConfig : IEntityTypeConfiguration<PurchasedM
     public void Configure(EntityTypeBuilder<PurchasedMovie> builder)
     {
         builder.ToTable("PurchasedMovies");
-        builder.HasKey(m => m.Id);
+
+        builder.HasKey(x => x.Id);
+
+       // builder.Property(x => x.Price);
 
         builder.OwnsOne(e => e.Price, modelNameBuilder =>
             modelNameBuilder
                 .Property(l => l.Value)
-                .HasColumnName(nameof(PurchasedMovie.Price))
-                .HasColumnType("decimal(18, 2)")
-                .IsRequired());
+                .HasColumnName(nameof(PurchasedMovie.Price)));
 
-        builder.Navigation(n => n.Price);
+        builder.Property(x => x.PurchaseDate);
 
-        builder.Property(m => m.PurchaseDate);
+        // builder.Property(x => x.ExpirationDate);
+
+
         builder.OwnsOne(e => e.ExpirationDate, modelNameBuilder =>
             modelNameBuilder
                 .Property(l => l.Date)
                 .HasColumnName(nameof(PurchasedMovie.ExpirationDate)));
 
-        builder.Navigation(n => n.ExpirationDate);
-
         builder.HasOne(x => x.Movie)
-            .WithMany().HasForeignKey(x => x.Movie)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithMany()
+            .HasForeignKey(x => x.MovieId);
 
         builder.HasOne(x => x.Customer)
-            .WithMany().HasForeignKey(x => x.Customer)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithMany(x => x.PurchasedMovies)
+            .HasForeignKey(x => x.CustomerId);
+
+
 
 
         builder.Property(c => c.CreatedOn).IsRequired();

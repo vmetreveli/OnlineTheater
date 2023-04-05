@@ -1,5 +1,3 @@
-using OnlineTheater.Domains.Services;
-
 namespace OnlineTheater.Applications.Features.Customer.Commands.PurchaseMovie;
 
 public sealed class PurchaseMovieCommandHandler : ICommandHandler<PurchaseMovieCommand, Unit>

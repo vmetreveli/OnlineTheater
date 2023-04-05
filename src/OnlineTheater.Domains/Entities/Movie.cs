@@ -7,7 +7,7 @@ namespace OnlineTheater.Domains.Entities;
 public  abstract class Movie : EntityBase
 {
     public string? Name { get; private set; }
-    private LicensingModel LicensingModel { get;  set; }
+    public LicensingModel LicensingModel { get;  private set; }
 
     public abstract ExpirationDate GetExpirationDate();
 
