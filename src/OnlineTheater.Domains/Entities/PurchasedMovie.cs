@@ -9,8 +9,6 @@ public sealed class PurchasedMovie : EntityBase
 
     public Customer Customer { get; private set; }
 
-    private decimal _price;
-
     public Dollars Price { get; private set; }
 
     public DateTime PurchaseDate { get; private set; }
