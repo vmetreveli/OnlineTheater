@@ -12,7 +12,13 @@ internal sealed class MovieConfig : IEntityTypeConfiguration<Movie>
         builder.HasKey(m => m.Id);
 
         builder.Property(m => m.Name);
-        builder.Property(m => m.LicensingModel);
+        builder.Property<int>("LicensingModel");
+
+        builder.HasDiscriminator<int>("LicensingModel")
+            .HasValue<TwoDaysMovie>(1)
+            .HasValue<LifeLongMovie>(2);
+
+        builder.ToTable("Movies");
 
 
         builder.Property(c => c.CreatedOn).IsRequired();
@@ -22,4 +28,16 @@ internal sealed class MovieConfig : IEntityTypeConfiguration<Movie>
 
         builder.HasQueryFilter(c => !c.IsDelete);
     }
+}
+
+public sealed class TwoDaysMovieConfiguration : IEntityTypeConfiguration<TwoDaysMovie>
+{
+    public void Configure(EntityTypeBuilder<TwoDaysMovie> builder) =>
+        builder.HasBaseType<Movie>();
+}
+
+public sealed class LifeLongMovieConfiguration : IEntityTypeConfiguration<LifeLongMovie>
+{
+    public void Configure(EntityTypeBuilder<LifeLongMovie> builder) =>
+        builder.HasBaseType<Movie>();
 }
