@@ -29,11 +29,30 @@ public sealed class Customer : EntityBase
 
     public void UpdateCustomer(CustomerName name) => Name = name;
 
-    public void AddPurchasedMovie(Movie movie, ExpirationDate expirationDate, Dollars dollars)
+    public void PurchaseMovie(Movie movie)
     {
-        var purchasedMovie = new PurchasedMovie(movie, this, dollars, expirationDate);
+        var expirationDate = movie.GetExpirationDate();
+        var price = movie.CalculatePrice(Status);
+
+        var purchasedMovie = new PurchasedMovie(movie, this, price, expirationDate);
 
         _purchasedMovies.Add(purchasedMovie);
-        MoneySpent += dollars;
+        MoneySpent += price;
+    }
+    public bool Promote()
+    {
+        // at least 2 active movies during the last 30 days
+        if (PurchasedMovies.Count(x =>
+                x.ExpirationDate == ExpirationDate.Infinite ||
+                x.ExpirationDate >= DateTime.UtcNow.AddDays(-30)) < 2)
+            return false;
+
+        // at least 100 dollars spent during the last year
+        if (PurchasedMovies.Where(x => x.PurchaseDate > DateTime.UtcNow.AddYears(-1))
+                .Sum(x => x.Price?.Value) < 100m)
+            return false;
+
+        Status = Status.Promote();
+        return true;
     }
 }

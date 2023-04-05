@@ -6,7 +6,5 @@ namespace OnlineTheater.Domains.Services;
 
 public interface ICustomerService
 {
-    Dollars CalculatePrice(CustomerStatus status,  LicensingModel licensingModel);
     void PurchaseMovie(Customer customer, Movie movie);
-    bool PromoteCustomer(Customer customer);
 }

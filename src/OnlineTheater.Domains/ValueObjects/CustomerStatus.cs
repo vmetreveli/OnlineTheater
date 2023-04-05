@@ -20,6 +20,8 @@ public sealed class CustomerStatus : ValueObject
         ExpirationDate = expirationDate;
     }
 
+    public decimal GetDiscount() => IsAdvance ? 0.25m : 0m;
+
     public CustomerStatus Promote() =>
         new CustomerStatus(CustomerStatusType.Advanced, (ExpirationDate)DateTime.UtcNow.AddYears(1));
     protected override IEnumerable<object> GetAtomicValues()

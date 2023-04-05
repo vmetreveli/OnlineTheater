@@ -2,11 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineTheater.Domains.Repository;
-using OnlineTheater.Domains.Services;
 using OnlineTheater.Infrastructure.Context;
 using OnlineTheater.Infrastructure.Interceptors;
 using OnlineTheater.Infrastructure.Repositories;
-using OnlineTheater.Infrastructure.Service;
 
 namespace OnlineTheater.Infrastructure;
 
@@ -30,8 +28,6 @@ public static class DependencyInjection
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IMovieRepository, MovieRepository>();
 
-        services.AddScoped<ICustomerService, CustomerService>();
-        services.AddScoped<IMovieService, MovieService>();
         return services;
     }
 }

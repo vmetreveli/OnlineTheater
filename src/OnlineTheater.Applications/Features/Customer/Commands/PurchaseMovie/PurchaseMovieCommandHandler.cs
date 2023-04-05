@@ -5,15 +5,12 @@ namespace OnlineTheater.Applications.Features.Customer.Commands.PurchaseMovie;
 public sealed class PurchaseMovieCommandHandler : ICommandHandler<PurchaseMovieCommand, Unit>
 {
     private readonly ICustomerRepository _customerRepository;
-    private readonly ICustomerService _customerService;
     private readonly IMovieRepository _movieRepository;
 
-    public PurchaseMovieCommandHandler(IMovieRepository movieRepository, ICustomerRepository customerRepository,
-        ICustomerService customerService)
+    public PurchaseMovieCommandHandler(IMovieRepository movieRepository, ICustomerRepository customerRepository)
     {
         _movieRepository = movieRepository;
         _customerRepository = customerRepository;
-        _customerService = customerService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(PurchaseMovieCommand request, CancellationToken cancellationToken)
@@ -28,7 +25,7 @@ public sealed class PurchaseMovieCommandHandler : ICommandHandler<PurchaseMovieC
                 x.Movie.Id == movie.Id && !x.ExpirationDate.IsExpired))
             return Error.Conflict(description: $"The movie is already purchased:: {movie.Name}");
 
-        _customerService.PurchaseMovie(customer, movie);
+        customer.PurchaseMovie(movie);
 
         await _customerRepository.SaveChangesAsync(cancellationToken);
 

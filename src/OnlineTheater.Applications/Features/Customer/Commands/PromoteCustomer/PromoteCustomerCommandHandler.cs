@@ -23,7 +23,7 @@ public sealed class PromoteCustomerCommandHandler : ICommandHandler<PromoteCusto
         if (customer.Status.IsAdvance)
             return Error.Conflict("The customer already has the Advanced status");
 
-        var success = _customerService.PromoteCustomer(customer);
+        var success = customer.Promote();
         if (!success) return Error.Conflict("Cannot promote the customer");
 
         await _customerRepository.SaveChangesAsync(cancellationToken);
