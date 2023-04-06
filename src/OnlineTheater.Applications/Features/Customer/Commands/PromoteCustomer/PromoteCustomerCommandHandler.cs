@@ -13,11 +13,12 @@ public sealed class PromoteCustomerCommandHandler : ICommandHandler<PromoteCusto
         if (customer == null)
             return Error.Failure(description: $"Invalid customer id: {request.UserId}");
 
-        if (customer.Status.IsAdvance)
-            return Error.Conflict(description:"The customer already has the Advanced status");
+        var promotionCheck = customer.CanPromote();
+        if (promotionCheck.IsError)
+            return promotionCheck.Errors;
 
-        var success = customer.Promote();
-        if (!success) return Error.Conflict(description:"Cannot promote the customer");
+        customer.Promote();
+
 
         await _customerRepository.SaveChangesAsync(cancellationToken);
 
