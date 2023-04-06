@@ -20,9 +20,9 @@ public sealed class Customer : EntityBase
 
     public CustomerName? Name { get; private set; }
 
-    public Email? Email { get; private set; }
+    public Email? Email { get;}
 
-    public CustomerStatus? Status { get; set; }
+    public CustomerStatus? Status { get; private set; }
     public Dollars? MoneySpent { get; private set; }
     private readonly IList<PurchasedMovie> _purchasedMovies;
     public IEnumerable<PurchasedMovie?> PurchasedMovies => _purchasedMovies.ToList();

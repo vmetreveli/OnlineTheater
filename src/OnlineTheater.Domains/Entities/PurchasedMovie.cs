@@ -11,9 +11,9 @@ public sealed class PurchasedMovie : EntityBase
 
     public Dollars Price { get; private set; }
 
-    public DateTime PurchaseDate { get; private set; }
+    public DateTime PurchaseDate { get;}
 
-    public ExpirationDate? ExpirationDate { get; private set; }
+    public ExpirationDate? ExpirationDate { get;  }
 
     public Guid? MovieId { get; private set; }
     public Guid? CustomerId { get; private set; }
