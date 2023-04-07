@@ -2,14 +2,15 @@ namespace OnlineTheater.Applications.Features.Customer.Commands.PromoteCustomer;
 
 public sealed class PromoteCustomerCommandHandler : ICommandHandler<PromoteCustomerCommand, Unit>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public PromoteCustomerCommandHandler(ICustomerRepository customerRepository) =>
-        _customerRepository = customerRepository;
+    public PromoteCustomerCommandHandler(IUnitOfWork unitOfWork) =>
+        _unitOfWork = unitOfWork;
+
 
     public async Task<ErrorOr<Unit>> Handle(PromoteCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByIdAsync(request.UserId, cancellationToken);
+        var customer = await _unitOfWork.Customer.GetByIdAsync(request.UserId, cancellationToken);
         if (customer == null)
             return Error.Failure(description: $"Invalid customer id: {request.UserId}");
 
@@ -20,7 +21,7 @@ public sealed class PromoteCustomerCommandHandler : ICommandHandler<PromoteCusto
         customer.Promote();
 
 
-        await _customerRepository.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

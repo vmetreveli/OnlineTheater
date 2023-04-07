@@ -2,10 +2,10 @@ namespace OnlineTheater.Applications.Features.Customer.Commands.CreateCustomer;
 
 public sealed class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, Unit>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCustomerCommandHandler(ICustomerRepository customerRepository)
-        => _customerRepository = customerRepository;
+    public CreateCustomerCommandHandler(IUnitOfWork unitOfWork) =>
+        _unitOfWork = unitOfWork;
 
     public async Task<ErrorOr<Unit>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
@@ -20,15 +20,15 @@ public sealed class CreateCustomerCommandHandler : ICommandHandler<CreateCustome
             return errors;
         }
 
-        var customer = await _customerRepository.GetByEmailAsync(emailOrError.Value, cancellationToken);
+        var customer = await _unitOfWork.Customer.GetByEmailAsync(emailOrError.Value, cancellationToken);
 
         if (customer is not null) return Error.Failure(description: $"Email is already in use: {request.Email}");
 
         customer = new Domains.Entities.Customer(customerNameOrError.Value, emailOrError.Value);
 
 
-        await _customerRepository.CreateAsync(customer, cancellationToken);
-        await _customerRepository.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.Customer.CreateAsync(customer, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
 }

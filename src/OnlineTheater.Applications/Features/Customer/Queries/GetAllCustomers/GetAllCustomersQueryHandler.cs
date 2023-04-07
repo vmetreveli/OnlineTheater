@@ -4,27 +4,26 @@ namespace OnlineTheater.Applications.Features.Customer.Queries.GetAllCustomers;
 
 public sealed class GetAllCustomersQueryHandler : IQueryHandler<GetAllCustomersQuery, IQueryable<CustomerInListDto>>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
+    public GetAllCustomersQueryHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
-    public GetAllCustomersQueryHandler(ICustomerRepository customerRepository)
-        => _customerRepository = customerRepository;
 
     public async Task<ErrorOr<IQueryable<CustomerInListDto>>> Handle(GetAllCustomersQuery request,
         CancellationToken cancellationToken)
     {
-        var customers = await _customerRepository.GetAllAsync(cancellationToken);
+        var customers = await _unitOfWork.Customer.GetAllAsync(cancellationToken);
         if (!customers.Any()) return Error.NotFound();
 
         return ErrorOr.ErrorOr.From(customers
             .Select(x => new CustomerInListDto
             {
                 Id = x.Id,
-                Name = x.Name.Value,
-                Email = x.Email.Value,
-                MoneySpent = x.MoneySpent.Value,
-                Status = x.Status.Type.ToString(),
-                StatusExpirationDate = x.Status.ExpirationDate.Date,
+                Name = x.Name!,
+                Email = x.Email!,
+                MoneySpent = x.MoneySpent!,
+                Status = x.Status!.Type.ToString(),
+                StatusExpirationDate = x.Status.ExpirationDate!.Date,
             }));
     }
 }

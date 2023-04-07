@@ -2,10 +2,10 @@ namespace OnlineTheater.Applications.Features.Customer.Commands.UpdateCustomer;
 
 public sealed class UpdateCustomerCommanderHandler : ICommandHandler<UpdateCustomerCommander, Unit>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCustomerCommanderHandler(ICustomerRepository customerRepository) =>
-        _customerRepository = customerRepository;
+    public UpdateCustomerCommanderHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+
 
     public async Task<ErrorOr<Unit>> Handle(UpdateCustomerCommander request, CancellationToken cancellationToken)
     {
@@ -13,12 +13,12 @@ public sealed class UpdateCustomerCommanderHandler : ICommandHandler<UpdateCusto
 
         if (customerNameOrError.IsError) return customerNameOrError.Errors;
 
-        var customer = await _customerRepository.GetByIdAsync(request.Id, cancellationToken);
+        var customer = await _unitOfWork.Customer.GetByIdAsync(request.Id, cancellationToken);
         if (customer == null) return Error.Failure(description: $"Invalid customer id:: {request.Id}");
 
         // customer.Name = customerNameOrError.Value;
         customer.UpdateCustomer(customerNameOrError.Value);
-       await _customerRepository.SaveChangesAsync(cancellationToken);
+       await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
 }
