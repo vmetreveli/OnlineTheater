@@ -9,7 +9,7 @@ public sealed class CustomerRepository : RepositoryBase<Customer>, ICustomerRepo
 {
     private readonly DbContext _dbContext;
 
-    public CustomerRepository(DbContext context, DbContext dbContext) : base(context)
+    public CustomerRepository(DbContext dbContext) : base(dbContext)
         => _dbContext = dbContext;
 
     public async Task<Customer?> GetByEmailAsync(Email email, CancellationToken cancellationToken) =>
