@@ -2,7 +2,7 @@ using OnlineTheater.Domains.Primitives;
 
 namespace OnlineTheater.Domains.ValueObjects;
 
-public sealed class Dollars : ValueObject
+public sealed class Dollars : ValueObject<Dollars>
 {
     private const decimal MaxDollarAmount = 1_000_000;
 
@@ -45,14 +45,6 @@ public sealed class Dollars : ValueObject
     // public static explicit operator Dollars(decimal? value)
     //     => Create(value).Value;
 
-    public static implicit operator decimal(Dollars dollars)
-    {
-        return dollars.Value;
-    }
-
-
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Value!;
-    }
+    public static implicit operator decimal(Dollars dollars) =>
+        dollars.Value;
 }

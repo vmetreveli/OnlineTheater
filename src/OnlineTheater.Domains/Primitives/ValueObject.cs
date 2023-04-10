@@ -1,52 +1,61 @@
+using System.Reflection;
+
 namespace OnlineTheater.Domains.Primitives;
 
-public abstract class ValueObject : IEquatable<ValueObject>
+public abstract class ValueObject<T> : IEquatable<T> where T : ValueObject<T>
 {
-    /// <inheritdoc />
-    public bool Equals(ValueObject? other)
-    {
-        if (other is null) return false;
+    public override bool Equals(object? obj) =>
+        Equals(obj as T);
 
-        return GetAtomicValues().SequenceEqual(other.GetAtomicValues());
+    public bool Equals(T? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+
+        // Compare all properties of the Value Object
+        var properties = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+        foreach (var property in properties)
+        {
+            var thisValue = property.GetValue(this, null);
+            var otherValue = property.GetValue(other, null);
+            if (!Equals(thisValue, otherValue))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    public static bool operator ==(ValueObject? a, ValueObject? b)
+    public override int GetHashCode()
     {
-        if (a is null && b is null) return true;
+        // Combine hash codes of all properties of the Value Object
+        var properties = GetType()
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
-        if (a is null || b is null) return false;
+        return properties
+            .Select(property => property
+                .GetValue(this, null))
+            .Aggregate(17, (current, value)
+                => current * 31 + ( value != null ? value.GetHashCode() : 0 ));
+    }
+
+    public static bool operator ==(ValueObject<T>? a, ValueObject<T>? b)
+    {
+        if (ReferenceEquals(a, b))
+        {
+            return true;
+        }
+
+        if (a is null || b is null)
+        {
+            return false;
+        }
 
         return a.Equals(b);
     }
 
-    public static bool operator !=(ValueObject a, ValueObject b) => !( a == b );
-
-
-    /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        if (obj == null) return false;
-
-        if (GetType() != obj.GetType()) return false;
-
-        if (obj is not ValueObject valueObject) return false;
-
-        return GetAtomicValues().SequenceEqual(valueObject.GetAtomicValues());
-    }
-
-    /// <inheritdoc />
-    public override int GetHashCode() =>
-        GetAtomicValues()
-            .Aggregate(default(HashCode), (hashCode, obj) =>
-            {
-                hashCode.Add(obj.GetHashCode());
-
-                return hashCode;
-            }).ToHashCode();
-
-    /// <summary>
-    ///     Gets the atomic values of the value object.
-    /// </summary>
-    /// <returns>The collection of objects representing the value object values.</returns>
-    protected abstract IEnumerable<object> GetAtomicValues();
+    public static bool operator !=(ValueObject<T> a, ValueObject<T> b) => !( a == b );
 }

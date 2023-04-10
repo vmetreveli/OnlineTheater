@@ -3,7 +3,7 @@ using OnlineTheater.Domains.Primitives;
 
 namespace OnlineTheater.Domains.ValueObjects;
 
-public sealed class Email : ValueObject
+public sealed class Email : ValueObject<Email>
 {
     private Email()
     {
@@ -31,9 +31,4 @@ public sealed class Email : ValueObject
     public static explicit operator Email(string? email)
         => Create(email).Value;
 
-
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Value!;
-    }
 }

@@ -2,7 +2,7 @@ using OnlineTheater.Domains.Primitives;
 
 namespace OnlineTheater.Domains.ValueObjects;
 
-public sealed class ExpirationDate : ValueObject
+public sealed class ExpirationDate : ValueObject<ExpirationDate>
 {
     public static readonly ExpirationDate Infinite = new(null);
 
@@ -14,7 +14,7 @@ public sealed class ExpirationDate : ValueObject
         => Date = date;
 
     public DateTime? Date { get; }
-    public  bool IsExpired => this != Infinite || Date < DateTime.UtcNow;
+    public bool IsExpired => this != Infinite || Date < DateTime.UtcNow;
 
     private static ErrorOr<ExpirationDate> Create(DateTime date)
         => new ExpirationDate(date);
@@ -26,9 +26,4 @@ public sealed class ExpirationDate : ValueObject
 
     public static explicit operator ExpirationDate(DateTime? date) =>
         date.HasValue ? Create(date.Value).Value : Infinite;
-
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Date!;
-    }
 }

@@ -2,7 +2,7 @@ using OnlineTheater.Domains.Primitives;
 
 namespace OnlineTheater.Domains.ValueObjects;
 
-public sealed class CustomerName : ValueObject
+public sealed class CustomerName : ValueObject<CustomerName>
 {
     private CustomerName(string value)
         => Value = value;
@@ -27,8 +27,4 @@ public sealed class CustomerName : ValueObject
     public static explicit operator CustomerName(string? name)
         => Create(name).Value;
 
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Value;
-    }
 }
